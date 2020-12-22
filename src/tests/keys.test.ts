@@ -28,7 +28,7 @@ test('Keys: buildKeys', () => {
 });
 
 test('Keys: slug', () => {
-  expect(slug('some/path/to/page.html', 4)).toEqual('some-path-to-page-html');
-  expect(slug('some!value@email.com', 4)).toEqual('some-value-email-com');
-  expect(slug('some   value to slugify!!!', 4)).toEqual('some-value-to-slugify');
+  expect(slug('some/path/to/page.html')).toEqual('some-path-to-page-html');
+  expect(slug('some!value@email.com')).toEqual('some-value-email-com');
+  expect(slug('some   value to slugify!!!')).toEqual('some-value-to-slugify');
 });

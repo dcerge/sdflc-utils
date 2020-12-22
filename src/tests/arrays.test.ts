@@ -19,14 +19,14 @@ test('Arrays: arrToUpperCase', () => {
   const src = ['abc', 'def1'];
   const dst = ['ABC', 'DEF1'];
 
-  expect(arrToUpperCase(src, 3)).toEqual(dst);
-  expect(arrToUpperCase([], 3)).toEqual([]);
+  expect(arrToUpperCase(src)).toEqual(dst);
+  expect(arrToUpperCase([])).toEqual([]);
 });
 
 test('Arrays: arrToLowerCase', () => {
   const src = ['ABC', 'DeF1'];
   const dst = ['abc', 'def1'];
 
-  expect(arrToLowerCase(src, 3)).toEqual(dst);
-  expect(arrToLowerCase([], 3)).toEqual([]);
+  expect(arrToLowerCase(src)).toEqual(dst);
+  expect(arrToLowerCase([])).toEqual([]);
 });
