@@ -1,4 +1,4 @@
-const { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates } = require('../');
+import { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates } from '../';
 
 test('Coordinates: buildCoordinatesStr', () => {
   expect(buildCoordinatesStr({ longitude: '123', latitude: '456' })).toEqual('456,123');
@@ -19,7 +19,7 @@ test('Coordinates: buildCoordinates', () => {
     altitudeAccuracy: 100,
     heading: 'SW',
     speed: 5,
-    coordinatesCode: 0
+    coordinatesCode: 0,
   };
 
   const coord = {
@@ -32,8 +32,8 @@ test('Coordinates: buildCoordinates', () => {
       accuracy: 30,
       altitudeAccuracy: 100,
       heading: 'SW',
-      speed: 5
-    })
+      speed: 5,
+    }),
   };
 
   expect(buildCoordinates(query)).toEqual(coord);

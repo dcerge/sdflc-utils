@@ -44,7 +44,7 @@ export const buildKey = (keys: any) => {
  * @param {string[]} keys array of strings to be processed.
  */
 export const buildKeys = (keys: any[]) => {
-  return keys.map(key => buildKey(key));
+  return keys.map((key) => buildKey(key));
 };
 
 /**

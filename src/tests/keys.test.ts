@@ -1,13 +1,19 @@
-const { camelKeys, camelResponse, buildKey, buildKeys, slug } = require('../');
+import { camelKeys, camelResponse, buildKey, buildKeys, slug } from '../';
 
 test('Keys: camelKeys', () => {
   expect(camelKeys({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
-  expect(camelKeys([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([{ camelCase: 'value' }, { camelCase: 'value' }]);
+  expect(camelKeys([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([
+    { camelCase: 'value' },
+    { camelCase: 'value' },
+  ]);
 });
 
 test('Keys: camelResponse', () => {
   expect(camelResponse({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
-  expect(camelResponse([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([{ camelCase: 'value' }, { camelCase: 'value' }]);
+  expect(camelResponse([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([
+    { camelCase: 'value' },
+    { camelCase: 'value' },
+  ]);
 });
 
 test('Keys: buildKey', () => {
@@ -17,7 +23,7 @@ test('Keys: buildKey', () => {
 });
 
 test('Keys: buildKeys', () => {
-  expect(buildKeys(['password', 'abc'])).toEqual(['PASSWORD','ABC']);
+  expect(buildKeys(['password', 'abc'])).toEqual(['PASSWORD', 'ABC']);
   expect(buildKeys(['password', ['abc', '123']])).toEqual(['PASSWORD', 'ABC-123']);
 });
 

@@ -1,5 +1,12 @@
 import { ALPHABET } from './../constants';
-const { doesValueMatchAlphabet, isLengthBetween, areStringsEqual, replaceAt, insertAt, truncateToLength } = require('../');
+import {
+  doesValueMatchAlphabet,
+  isLengthBetween,
+  areStringsEqual,
+  replaceAt,
+  insertAt,
+  truncateToLength,
+} from '../index';
 
 test('Strings: doesValueMatchAlphabet', () => {
   expect(doesValueMatchAlphabet('password', ALPHABET)).toEqual(true);

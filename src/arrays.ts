@@ -9,7 +9,7 @@
  * @param valueKey an object property name to use for retrieving new object property value
  * @returns {object} an object with properties and values taken from the input array
  */
-export const arrayToObject = (arr: Array<object>, nameKey: string, valueKey: string) => {
+export const arrayToObject = (arr: any[], nameKey: string, valueKey: string) => {
   const obj = {};
 
   if (arr instanceof Array === false) {
@@ -27,7 +27,7 @@ export const arrayToObject = (arr: Array<object>, nameKey: string, valueKey: str
  * @param {string[]} arr arrays of string to upper case
  */
 export const arrToUpperCase = (arr: string[]) => {
-  return (arr || []).map(item => (item || '').toUpperCase());
+  return (arr || []).map((item) => (item || '').toUpperCase());
 };
 
 /**
@@ -35,5 +35,5 @@ export const arrToUpperCase = (arr: string[]) => {
  * @param {string[]} arr arrays of string to lower case
  */
 export const arrToLowerCase = (arr: string[]) => {
-  return (arr || []).map(item => (item || '').toLowerCase());
+  return (arr || []).map((item) => (item || '').toLowerCase());
 };

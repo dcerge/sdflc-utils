@@ -1,8 +1,4 @@
-import {
-  arrayToObject,
-  arrToUpperCase,
-  arrToLowerCase
-} from './arrays';
+import { arrayToObject, arrToUpperCase, arrToLowerCase } from './arrays';
 import { onlyPropsOf } from './classes';
 import { converStringToValue } from './converters';
 import {
@@ -18,14 +14,9 @@ import {
   UUID_TWO,
   UUID_THREE,
   UUID_FOUR,
-  UUID_FIVE
+  UUID_FIVE,
 } from './constants';
-import {
-  buildCoordinatesStr,
-  extractLatitueLongitude,
-  buildCoordinates,
-  coordinatesParamNames
-} from './coordinates';
+import { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates, coordinatesParamNames } from './coordinates';
 import { setNullOnEmptyString } from './objects';
 import {
   doesValueMatchAlphabet,
@@ -33,16 +24,10 @@ import {
   areStringsEqual,
   replaceAt,
   insertAt,
-  truncateToLength
+  truncateToLength,
 } from './strings';
 import { extractLanguages } from './languages';
-import {
-  camelKeys,
-  camelResponse,
-  buildKey,
-  buildKeys,
-  slug
-} from './keys';
+import { camelKeys, camelResponse, buildKey, buildKeys, slug } from './keys';
 
 export {
   arrayToObject,

@@ -6,7 +6,7 @@
  * dstObj => { firstName: 'John', lastName: null };
  * @param {any} obj an object to process
  */
-export const setNullOnEmptyString = (obj: any) => {
+export const setNullOnEmptyString = (obj: any): any => {
   const tmp: any = {};
 
   Object.keys(obj || {}).forEach((key) => {

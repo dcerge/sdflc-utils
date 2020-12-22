@@ -1,14 +1,14 @@
-const { setNullOnEmptyString} = require('../');
+import { setNullOnEmptyString } from '../';
 
 test('Objects: setNullOnEmptyString', () => {
   const src = {
     firstName: 'John',
-    lastName: ''
+    lastName: '',
   };
 
   const dst = {
     firstName: 'John',
-    lastName: null
+    lastName: null,
   };
 
   expect(setNullOnEmptyString(src)).toEqual(dst);

@@ -3,9 +3,9 @@
  * @param c Type instanceof which should be created
  * @example createInstance(MyClassName)
  */
-function createInstance<T>(c: new () => T): T {
-  return new c();
-}
+// function createInstance<T>(c: new () => T): T {
+//   return new c();
+// }
 
 /**
  * Takes an object and creates another object of `destinationType` type.

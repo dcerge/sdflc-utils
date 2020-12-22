@@ -1,14 +1,14 @@
-const { arrayToObject, arrToUpperCase, arrToLowerCase } = require('../');
+import { arrayToObject, arrToUpperCase, arrToLowerCase } from '../';
 
 test('Arrays: arrayToObject', () => {
   const src = [
     { name: 'status', value: 'active' },
-    { name: 'name', value: 'Some name' }
+    { name: 'name', value: 'Some name' },
   ];
 
   const dst = {
     status: 'active',
-    name: 'Some name'
+    name: 'Some name',
   };
 
   expect(arrayToObject(src, 'name', 'value')).toEqual(dst);
