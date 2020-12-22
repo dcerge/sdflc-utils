@@ -1,0 +1,30 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UUID_FIVE = exports.UUID_FOUR = exports.UUID_THREE = exports.UUID_TWO = exports.UUID_ONE = exports.UUID_EMPTY = exports.ALPHABET_CODE = exports.ALPHABET_09 = exports.ALPHABET_az = exports.ALPHABET_AZ = exports.ALPHABET = exports.VALUE_TYPES_LIST = exports.VALUE_TYPES = void 0;
+exports.VALUE_TYPES = {
+    STRING: 'STRING',
+    INTEGER: 'INTEGER',
+    FLOAT: 'FLOAT',
+    DECIMAL: 'DECIMAL',
+    NUMBER: 'NUMBER',
+    BOOLEAN: 'BOOLEAN',
+};
+exports.VALUE_TYPES_LIST = [
+    exports.VALUE_TYPES.STRING,
+    exports.VALUE_TYPES.INTEGER,
+    exports.VALUE_TYPES.FLOAT,
+    exports.VALUE_TYPES.DECIMAL,
+    exports.VALUE_TYPES.NUMBER,
+    exports.VALUE_TYPES.BOOLEAN,
+];
+exports.ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+exports.ALPHABET_AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+exports.ALPHABET_az = 'abcdefghijklmnopqrstuvwxyz';
+exports.ALPHABET_09 = '0123456789';
+exports.ALPHABET_CODE = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789';
+exports.UUID_EMPTY = '00000000-0000-0000-0000-000000000000';
+exports.UUID_ONE = '00000000-0000-0000-0000-000000000001';
+exports.UUID_TWO = '00000000-0000-0000-0001-000000000000';
+exports.UUID_THREE = '00000000-0000-0001-0000-000000000000';
+exports.UUID_FOUR = '00000000-0001-0000-0000-000000000000';
+exports.UUID_FIVE = '00000001-0000-0000-0000-000000000000';
