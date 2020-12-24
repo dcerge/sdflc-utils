@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.arrToUpperCase = exports.arrToChunks = exports.arrayToObject = void 0;
+exports.arrToLowerCase = exports.arrToUpperCase = exports.arrayToObject = void 0;
 /**
  * Convert an array of objects into an object which properties names and values are taken from nameKey and valueKey of each item.
  * Example:
@@ -24,27 +24,18 @@ var arrayToObject = function (arr, nameKey, valueKey) {
 };
 exports.arrayToObject = arrayToObject;
 /**
- * Splits an array into chunks of given size.
- * Example:
- * const arr = [1,2,3,4,5,6,7,8,9];
- * const chunks = arrToChunks(arr, 3);
- * chunks => [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
- * @param {any[]} arr array to split into chunks
- * @param {number} chunkSize size of chunk
- */
-var arrToChunks = function (arr, chunkSize) {
-    var R = [];
-    for (var i = 0; i < arr.length; i += chunkSize) {
-        R.push(arr.slice(i, i + chunkSize));
-    }
-    return R;
-};
-exports.arrToChunks = arrToChunks;
-/**
  * Uppercase each string in the array
  * @param {string[]} arr arrays of string to upper case
  */
 var arrToUpperCase = function (arr) {
-    return (arr || []).map(function (item) { return item.toUpperCase(); });
+    return (arr || []).map(function (item) { return (item || '').toUpperCase(); });
 };
 exports.arrToUpperCase = arrToUpperCase;
+/**
+ * Lowercase each string in the array
+ * @param {string[]} arr arrays of string to lower case
+ */
+var arrToLowerCase = function (arr) {
+    return (arr || []).map(function (item) { return (item || '').toLowerCase(); });
+};
+exports.arrToLowerCase = arrToLowerCase;

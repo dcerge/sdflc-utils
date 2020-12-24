@@ -29,10 +29,10 @@ exports.camelResponse = camelResponse;
  */
 var buildKey = function (keys) {
     if (keys instanceof Array) {
-        return keys.join('-').toUpperCase();
+        return keys.join('-').toLowerCase();
     }
     else if (typeof keys === 'string') {
-        return keys.toUpperCase();
+        return keys.toLowerCase();
     }
     else if (typeof keys === 'number') {
         return keys.toString();

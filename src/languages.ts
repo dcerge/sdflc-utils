@@ -3,7 +3,7 @@
  * @param {string} str A string from 'Accept-Language' header of a HTTP request
  * @returns {string[]} An array of languages found in the string.
  */
-export const extractLanguages = (str: string) => {
+export const extractLanguages = (str: string): string[] => {
   if (!str) {
     return [];
   }

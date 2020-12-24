@@ -1,14 +1,15 @@
 "use strict";
-var setNullOnEmptyString = require('../').setNullOnEmptyString;
+Object.defineProperty(exports, "__esModule", { value: true });
+var __1 = require("../");
 test('Objects: setNullOnEmptyString', function () {
     var src = {
         firstName: 'John',
-        lastName: ''
+        lastName: '',
     };
     var dst = {
         firstName: 'John',
-        lastName: null
+        lastName: null,
     };
-    expect(setNullOnEmptyString(src)).toEqual(dst);
-    expect(setNullOnEmptyString(null)).toEqual({});
+    expect(__1.setNullOnEmptyString(src)).toEqual(dst);
+    expect(__1.setNullOnEmptyString(null)).toEqual({});
 });

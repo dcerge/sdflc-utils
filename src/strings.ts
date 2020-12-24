@@ -68,15 +68,3 @@ export const insertAt = (str: string, index: number, insert: string): string => 
   return str.substr(0, index) + insert + str.substr(index);
 };
 
-/**
- * Truncates provided string it its length exceeds maxLen.
- * @param {string} str a source string to truncate
- * @param maxLen
- */
-export const truncateToLength = (str: string, maxLen: number): string|null => {
-  if (typeof str !== 'string') {
-    return null;
-  }
-
-  return str.length > maxLen ? str.substr(0, maxLen) : str;
-};

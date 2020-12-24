@@ -1,24 +1,31 @@
 "use strict";
-var _a = require('../'), camelKeys = _a.camelKeys, camelResponse = _a.camelResponse, buildKey = _a.buildKey, buildKeys = _a.buildKeys, slug = _a.slug;
+Object.defineProperty(exports, "__esModule", { value: true });
+var __1 = require("../");
 test('Keys: camelKeys', function () {
-    expect(camelKeys({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
-    expect(camelKeys([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([{ camelCase: 'value' }, { camelCase: 'value' }]);
+    expect(__1.camelKeys({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
+    expect(__1.camelKeys([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([
+        { camelCase: 'value' },
+        { camelCase: 'value' },
+    ]);
 });
 test('Keys: camelResponse', function () {
-    expect(camelResponse({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
-    expect(camelResponse([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([{ camelCase: 'value' }, { camelCase: 'value' }]);
+    expect(__1.camelResponse({ 'camel-case': 'value' })).toEqual({ camelCase: 'value' });
+    expect(__1.camelResponse([{ 'camel-case': 'value' }, { 'camel-case': 'value' }])).toEqual([
+        { camelCase: 'value' },
+        { camelCase: 'value' },
+    ]);
 });
 test('Keys: buildKey', function () {
-    expect(buildKey('password')).toEqual('PASSWORD');
-    expect(buildKey(['password', 'abc'])).toEqual('PASSWORD-ABC');
-    expect(buildKey(123)).toEqual('123');
+    expect(__1.buildKey('PassWORD')).toEqual('password');
+    expect(__1.buildKey(['Password', 'ABC'])).toEqual('password-abc');
+    expect(__1.buildKey(123)).toEqual('123');
 });
 test('Keys: buildKeys', function () {
-    expect(buildKeys(['password', 'abc'])).toEqual(['PASSWORD', 'ABC']);
-    expect(buildKeys(['password', ['abc', '123']])).toEqual(['PASSWORD', 'ABC-123']);
+    expect(__1.buildKeys(['PassWORD', 'ABC'])).toEqual(['password', 'abc']);
+    expect(__1.buildKeys(['PassWORD', ['ABC', '123']])).toEqual(['password', 'abc-123']);
 });
 test('Keys: slug', function () {
-    expect(slug('some/path/to/page.html', 4)).toEqual('some-path-to-page-html');
-    expect(slug('some!value@email.com', 4)).toEqual('some-value-email-com');
-    expect(slug('some   value to slugify!!!', 4)).toEqual('some-value-to-slugify');
+    expect(__1.slug('some/path/to/page.html')).toEqual('some-path-to-page-html');
+    expect(__1.slug('some!value@email.com')).toEqual('some-value-email-com');
+    expect(__1.slug('some   value to slugify!!!')).toEqual('some-value-to-slugify');
 });

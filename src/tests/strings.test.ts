@@ -4,8 +4,7 @@ import {
   isLengthBetween,
   areStringsEqual,
   replaceAt,
-  insertAt,
-  truncateToLength,
+  insertAt
 } from '../index';
 
 test('Strings: doesValueMatchAlphabet', () => {
@@ -27,12 +26,6 @@ test('Strings: areStringsEqual', () => {
 test('Strings: replaceAt', () => {
   expect(replaceAt('password', 4, '*****')).toEqual('pass*****');
   expect(replaceAt('password', 10, '**')).toEqual('password');
-});
-
-test('Strings: truncateToLength', () => {
-  expect(truncateToLength('password', 4)).toEqual('pass');
-  expect(truncateToLength('password', 10)).toEqual('password');
-  expect(truncateToLength('', 10)).toEqual('');
 });
 
 test('Strings: insertAt', () => {

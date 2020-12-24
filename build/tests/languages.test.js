@@ -1,8 +1,9 @@
 "use strict";
-var extractLanguages = require('../').extractLanguages;
+Object.defineProperty(exports, "__esModule", { value: true });
+var __1 = require("../");
 test('Languages: extractLanguages', function () {
     var src = 'en,en-US;q=0.9,ru;q=0.8';
     var dst = ['en', 'en-US', 'ru'];
-    expect(extractLanguages(src)).toEqual(dst);
-    expect(extractLanguages(null)).toEqual([]);
+    expect(__1.extractLanguages(src)).toEqual(dst);
+    expect(__1.extractLanguages('')).toEqual([]);
 });

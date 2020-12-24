@@ -17,14 +17,14 @@ test('Keys: camelResponse', () => {
 });
 
 test('Keys: buildKey', () => {
-  expect(buildKey('password')).toEqual('PASSWORD');
-  expect(buildKey(['password', 'abc'])).toEqual('PASSWORD-ABC');
+  expect(buildKey('PassWORD')).toEqual('password');
+  expect(buildKey(['Password', 'ABC'])).toEqual('password-abc');
   expect(buildKey(123)).toEqual('123');
 });
 
 test('Keys: buildKeys', () => {
-  expect(buildKeys(['password', 'abc'])).toEqual(['PASSWORD', 'ABC']);
-  expect(buildKeys(['password', ['abc', '123']])).toEqual(['PASSWORD', 'ABC-123']);
+  expect(buildKeys(['PassWORD', 'ABC'])).toEqual(['password', 'abc']);
+  expect(buildKeys(['PassWORD', ['ABC', '123']])).toEqual(['password', 'abc-123']);
 });
 
 test('Keys: slug', () => {

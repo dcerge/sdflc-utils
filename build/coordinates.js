@@ -39,7 +39,7 @@ var buildCoordinates = function (query) {
             altitudeAccuracy: query.altitudeAccuracy,
             heading: query.heading,
             speed: query.speed,
-        }),
+        })
     };
 };
 exports.buildCoordinates = buildCoordinates;

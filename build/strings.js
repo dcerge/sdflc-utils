@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.truncateToLength = exports.insertAt = exports.replaceAt = exports.areStringsEqual = exports.isLengthBetween = exports.doesValueMatchAlphabet = void 0;
+exports.insertAt = exports.replaceAt = exports.areStringsEqual = exports.isLengthBetween = exports.doesValueMatchAlphabet = void 0;
 /**
  * Verifies if string contains only of letters from provided alphabet.
  * @param {string} value a string to check.
@@ -68,15 +68,3 @@ var insertAt = function (str, index, insert) {
     return str.substr(0, index) + insert + str.substr(index);
 };
 exports.insertAt = insertAt;
-/**
- * Truncates provided string it its length exceeds maxLen.
- * @param {string} str a source string to truncate
- * @param maxLen
- */
-var truncateToLength = function (str, maxLen) {
-    if (typeof str !== 'string') {
-        return null;
-    }
-    return (str.length > maxLen) ? str.substr(0, maxLen) : str;
-};
-exports.truncateToLength = truncateToLength;
