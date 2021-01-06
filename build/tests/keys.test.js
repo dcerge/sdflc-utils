@@ -18,6 +18,7 @@ test('Keys: camelResponse', function () {
 test('Keys: buildKey', function () {
     expect(__1.buildKey('PassWORD')).toEqual('password');
     expect(__1.buildKey(['Password', 'ABC'])).toEqual('password-abc');
+    expect(__1.buildKey('One Two Three!')).toEqual('one-two-three');
     expect(__1.buildKey(123)).toEqual('123');
 });
 test('Keys: buildKeys', function () {

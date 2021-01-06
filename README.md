@@ -112,6 +112,14 @@ insertAt('password', 4, '*****'); // => 'pass*****word'
 insertAt('password', 10, '*****'); // => 'password'
 ```
 
+## randomString(length: number, alphabet?: string)
+
+Generates a random string of `length` charatecer consisting of letters from the `alphabet`.
+
+```js
+randomString(5, 'ABC0123456789'); // => possible result is 'D09A3'
+```
+
 # Objects
 
 ## setNullOnEmptyString(obj: any)
@@ -162,16 +170,17 @@ const items = camelKeys(dbItems);
 
 ## buildKey(keys: any)
 
-Normalizes `keys` to some standard representation so it could be used is a key in key-value storage
+Normalizes `keys` to some standard representation so it could be used is a key in key-value storage. It usues `slug` function inside.
 
 ```js
 buildKey('aBc'); // => 'abc'
 buildKey(['aBc', '123']); // => 'abc-123'
+buildKey('One Two Three!'); // => 'one-two-three'
 ```
 
 ## buildKeys(keys: any[])
 
-Normalizes input array `keys` to some standard representation so it could be used is a key in key-value storage
+Normalizes input array `keys` to some standard representation so it could be used is a key in key-value storage. It just goes over all items and calls `buildKey` for each one.
 
 ```js
 buildKey(['PassWORD', 'ABC']); // => ['password', 'abc']

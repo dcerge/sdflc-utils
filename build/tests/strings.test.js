@@ -23,3 +23,7 @@ test('Strings: insertAt', function () {
     expect(index_1.insertAt('password', 4, '****')).toEqual('pass****word');
     expect(index_1.insertAt('password', 10, '**')).toEqual('password');
 });
+test('Strings: randomString', function () {
+    var str = index_1.randomString(16, 'ABCDEF0123456789');
+    expect(str).toHaveLength(16);
+});

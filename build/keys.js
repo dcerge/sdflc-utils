@@ -29,15 +29,15 @@ exports.camelResponse = camelResponse;
  */
 var buildKey = function (keys) {
     if (keys instanceof Array) {
-        return keys.join('-').toLowerCase();
+        return exports.slug(keys.join('-'));
     }
     else if (typeof keys === 'string') {
-        return keys.toLowerCase();
+        return exports.slug(keys);
     }
     else if (typeof keys === 'number') {
-        return keys.toString();
+        return exports.slug(keys.toString());
     }
-    return keys;
+    return exports.slug(keys.toString());
 };
 exports.buildKey = buildKey;
 /**

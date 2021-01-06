@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertAt = exports.replaceAt = exports.areStringsEqual = exports.isLengthBetween = exports.doesValueMatchAlphabet = void 0;
+exports.randomString = exports.insertAt = exports.replaceAt = exports.areStringsEqual = exports.isLengthBetween = exports.doesValueMatchAlphabet = void 0;
 /**
  * Verifies if string contains only of letters from provided alphabet.
  * @param {string} value a string to check.
@@ -68,3 +68,20 @@ var insertAt = function (str, index, insert) {
     return str.substr(0, index) + insert + str.substr(index);
 };
 exports.insertAt = insertAt;
+/**
+ * A simple function to generate random string with specified length with letter of provided alphabet.
+ * This function is not for security purposes.
+ * @param length a length for result random string
+ * @param alphabet a string of allowed letters in the random string
+ */
+var randomString = function (length, alphabet) {
+    var value = '';
+    var actualLength = isNaN(length) || length < 1 ? 16 : length;
+    var actualAlphabet = alphabet || 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+    var alphabetSize = actualAlphabet.length;
+    for (var idx = 0; idx < actualLength; idx++) {
+        value += actualAlphabet.charAt(Math.floor(Math.random() * alphabetSize));
+    }
+    return value;
+};
+exports.randomString = randomString;
