@@ -68,3 +68,21 @@ export const insertAt = (str: string, index: number, insert: string): string => 
   return str.substr(0, index) + insert + str.substr(index);
 };
 
+/**
+ * A simple function to generate random string with specified length with letter of provided alphabet.
+ * This function is not for security purposes.
+ * @param length a length for result random string
+ * @param alphabet a string of allowed letters in the random string
+ */
+export const randomString = (length: number, alphabet?: string) => {
+  let value = '';
+  const actualLength = isNaN(length) || length < 1 ? 16 : length;
+  const actualAlphabet = alphabet || 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+  const alphabetSize = actualAlphabet.length;
+
+  for (let idx = 0; idx < actualLength; idx++) {
+    value += actualAlphabet.charAt(Math.floor(Math.random() * alphabetSize));
+  }
+
+  return value;
+}

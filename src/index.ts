@@ -22,7 +22,8 @@ import {
   isLengthBetween,
   areStringsEqual,
   replaceAt,
-  insertAt
+  insertAt,
+  randomString
 } from './strings';
 import { extractLanguages } from './languages';
 import { camelKeys, camelResponse, buildKey, buildKeys, slug } from './keys';
@@ -56,6 +57,7 @@ export {
   areStringsEqual,
   replaceAt,
   insertAt,
+  randomString,
   extractLanguages,
   camelKeys,
   camelResponse,

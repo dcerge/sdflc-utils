@@ -29,14 +29,14 @@ export const camelResponse = (result: any) => {
  */
 export const buildKey = (keys: any) => {
   if (keys instanceof Array) {
-    return keys.join('-').toLowerCase();
+    return slug(keys.join('-'));
   } else if (typeof keys === 'string') {
-    return keys.toLowerCase();
+    return slug(keys);
   } else if (typeof keys === 'number') {
-    return keys.toString();
+    return slug(keys.toString());
   }
 
-  return keys;
+  return slug(keys.toString());
 };
 
 /**

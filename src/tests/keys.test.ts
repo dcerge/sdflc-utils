@@ -19,6 +19,7 @@ test('Keys: camelResponse', () => {
 test('Keys: buildKey', () => {
   expect(buildKey('PassWORD')).toEqual('password');
   expect(buildKey(['Password', 'ABC'])).toEqual('password-abc');
+  expect(buildKey('One Two Three!')).toEqual('one-two-three');
   expect(buildKey(123)).toEqual('123');
 });
 

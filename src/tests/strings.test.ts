@@ -4,7 +4,8 @@ import {
   isLengthBetween,
   areStringsEqual,
   replaceAt,
-  insertAt
+  insertAt,
+  randomString
 } from '../index';
 
 test('Strings: doesValueMatchAlphabet', () => {
@@ -31,4 +32,10 @@ test('Strings: replaceAt', () => {
 test('Strings: insertAt', () => {
   expect(insertAt('password', 4, '****')).toEqual('pass****word');
   expect(insertAt('password', 10, '**')).toEqual('password');
+});
+
+
+test('Strings: randomString', () => {
+  const str = randomString(16, 'ABCDEF0123456789');
+  expect(str).toHaveLength(16);
 });
