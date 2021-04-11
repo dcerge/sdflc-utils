@@ -4,7 +4,7 @@
  * @param {number} value
  */
 export const roundNumberValue = (value: number, decimals?: number) => {
-  return isNaN(value) ? NaN : Number(Number(value).toFixed(decimals || 2));
+  return isNaN(value) ? value : Number(Number(value).toFixed(decimals || 2));
 };
 
 /**

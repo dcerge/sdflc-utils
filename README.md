@@ -1,6 +1,6 @@
 # @sdflc/utils
 
-This is a set of utilities for arrays, strings, etc used in projects within @sdflc ecosystem to avoid using 3rd party libraries as much as possible.
+This is a set of utilities for arrays, numbers, strings, etc and it is used in projects within @sdflc ecosystem to avoid using 3rd party libraries as much as possible.
 
 # Arrays
 
@@ -62,6 +62,38 @@ Expects a string with list of languages taken from HTTP header and returns an ar
 ```js
 const acceptLanguage = 'en-US,en;q=0.9,ru;q=0.8,fr;q=0.7';
 const langs = extractLanguages(acceptLanguage); // => ['en-US', 'en', 'ru', 'fr'];
+```
+
+# Numbers
+
+## roundNumberValue(value: number, decimals?: number)
+
+Simply applies `.toFixed(decimals)` to a provided value and returns it as a number
+
+```js
+roundNumberValue(34.567); // 34.57
+roundNumberValue(34.5674, 3); // 34.567
+```
+
+## roundNumberValues(obj: any, decimals?: number)
+
+Accepts a number, an array of numbers or an array of objects and rounds all found numbers to provided number of decimals (2 decimals is default)
+
+```js
+const values = [34.567, 2.456, 7.233];
+const result = roundNumberValues(values);
+// => result = [34.57, 2.46, 7.23];
+const inValues = [
+  { a: 34.567, b: 'a' },
+  { a: 2.456, b: 'a' },
+  { a: 7.233, b: 'a' },
+];
+const outValues = roundNumberValues(inValues);
+// => outValues = [
+//   { a: 34.57, b: 'a' },
+//   { a: 2.46, b: 'a' },
+//   { a: 7.23, b: 'a' },
+// ]
 ```
 
 # Strigns
@@ -187,6 +219,16 @@ buildKey(['PassWORD', 'ABC']); // => ['password', 'abc']
 buildKey(['PassWORD', ['ABC', '123']]); // => ['password', 'abc-123']
 ```
 
+## isIdEmpty(value: string | number | undefined | null)
+
+Checks if passed ID value is empty. An ID value is empty when it is null, undefined, equals to '0', 0 or '00000000-0000-0000-0000-000000000000'
+
+```js
+isIdEmpty('0'); // => true
+isIdEmpty(0); // => true
+isIdEmpty('10'); // => false
+```
+
 ## slug(str: string)
 
 Converts the source string `str` to a slug:
@@ -195,4 +237,113 @@ Converts the source string `str` to a slug:
 slug('some/path/to/page.html'); // => 'some-path-to-page-html'
 slug('some!value@email.com'); // => 'some-value-email-com'
 slug('some   value to slugify!!!'); // => 'some-value-to-slugify'
+```
+
+# Transformers
+
+## buildHierarchy(arr: any[], idField: string, parentIdField: string, nameForChildren: string)
+
+Builds hierarchy out of provided array. See example below
+
+```js
+const arr = [
+  {
+    id: '1',
+    value: 'root',
+    parentId: null,
+  },
+  {
+    id: '4',
+    value: 'child 2.1',
+    parentId: '2',
+  },
+  {
+    id: '2',
+    value: 'child 1.1',
+    parentId: '1',
+  },
+  {
+    id: '3',
+    value: 'child 1.2',
+    parentId: '1',
+  },
+  {
+    id: '5',
+    value: 'child 3.1',
+    parentId: '3',
+  },
+  {
+    id: '6',
+    value: 'orphan',
+    parentId: '9',
+  },
+];
+
+const result = buildHierarchy(src, 'id', 'parentId', 'children');
+
+// result = {
+//   tree: [
+//     {
+//       id: '1',
+//       value: 'root',
+//       parentId: null,
+//       children: [
+//         {
+//           id: '2',
+//           value: 'child 1.1',
+//           parentId: '1',
+//           children: [
+//             {
+//               id: '4',
+//               value: 'child 2.1',
+//               parentId: '2',
+//               children: [],
+//             },
+//           ],
+//         },
+//         {
+//           id: '3',
+//           value: 'child 1.2',
+//           parentId: '1',
+//           children: [
+//             {
+//               id: '5',
+//               value: 'child 3.1',
+//               parentId: '3',
+//               children: [],
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+//   orphans: [
+//     {
+//       id: '6',
+//       value: 'orphan',
+//       parentId: '9',
+//       children: [],
+//     },
+//   ],
+// };
+```
+
+## mapArrayBy(arr: any[], mapBy: any, opt?: MapArrayByOptionsInterface)
+
+Maps array to an object by one or array of fields. See an example below
+
+```js
+const arr = [{ a: 'AAA', b: 'BBB'}, { a: 'CCC', b: 'DDD' }]
+const map1 = mapArrayBy(arr, 'a');
+// => map1 =
+//  {
+//    AAA: { a: 'AAA', b: 'BBB'},
+//    CCC: { a: 'CCC', b: 'DDD' }
+//  }
+
+const map2 = mapArrayBy(arr, ['a', 'b']); =>
+// => map2 = {
+//    a: { AAA: { a: 'AAA', b: 'BBB'}, CCC: { a: 'CCC', b: 'DDD' } },
+//    b: { BBB: { a: 'AAA', b: 'BBB'}, DDD: { a: 'CCC', b: 'DDD' } }
+//  }
 ```
