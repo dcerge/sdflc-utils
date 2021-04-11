@@ -4,20 +4,10 @@
   "description": "A set of utilites used in the @sdflc libraries and related projects. Purpose is to minimize usage of 3rd party libraries.",
   "main": "build/index.js",
   "scripts": {
-    "build-orig": "rimraf ./build && tsc",
-    "build": "tsc",
-    "start:dev": "nodemon",
-    "start": "npm run build && node build/index.js",
+    "build": "rimraf ./build && tsc",
     "lint": "eslint . --ext .ts",
-    "prettier-format": "run-script-os",
-    "prettier-format:win32": "prettier --config .prettierrc.js \"./src/**/*.ts\" --write",
-    "prettier-format:darwin:linux": "prettier --config .prettierrc.js 'src/**/*.ts' --write",
-    "prettier-format:default": "prettier --config .prettierrc.js 'src/**/*.ts' --write",
-    "prettier-watch": "run-script-os",
-    "prettier-watch:win32": "onchange \"src/**/*.ts\" -- prettier --write {{changed}}",
-    "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
-    "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
-    "test": "jest --config jest.config.ts"
+    "test": "jest --config jest.config.ts",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -37,14 +27,14 @@
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
-    "husky": "^4.3.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "run-script-os": "^1.1.3",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "husky": "^6.0.0"
   },
   "dependencies": {
     "lodash": "^4.17.20"

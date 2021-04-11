@@ -17,16 +17,11 @@ import {
 } from './constants';
 import { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates, coordinatesParamNames } from './coordinates';
 import { setNullOnEmptyString, onlyPropsOf } from './objects';
-import {
-  doesValueMatchAlphabet,
-  isLengthBetween,
-  areStringsEqual,
-  replaceAt,
-  insertAt,
-  randomString
-} from './strings';
+import { doesValueMatchAlphabet, isLengthBetween, areStringsEqual, replaceAt, insertAt, randomString } from './strings';
 import { extractLanguages } from './languages';
-import { camelKeys, camelResponse, buildKey, buildKeys, slug } from './keys';
+import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from './keys';
+import { roundNumberValue, roundNumberValues } from './numbers';
+import { buildHierarchy, mapArrayBy } from './transformers';
 
 export {
   arrayToObject,
@@ -63,5 +58,10 @@ export {
   camelResponse,
   buildKey,
   buildKeys,
+  isIdEmpty,
   slug,
+  roundNumberValue,
+  roundNumberValues,
+  buildHierarchy,
+  mapArrayBy,
 };
