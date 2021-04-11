@@ -36,7 +36,7 @@ export const buildCoordinates = (query: any) => {
       altitudeAccuracy: query.altitudeAccuracy,
       heading: query.heading,
       speed: query.speed,
-    })
+    }),
   };
 };
 

@@ -48,6 +48,19 @@ export const buildKeys = (keys: any[]) => {
 };
 
 /**
+ * Returns true if passed value is an empty ID which could be:
+ * - empty string or null or undefined
+ * - string '0'
+ * - number 0
+ * - guid '00000000-0000-0000-0000-000000000000'
+ * @param {string|number} value
+ * @returns {boolean} True if value represents empty ID
+ */
+export const isIdEmpty = (value: string | number | undefined | null) => {
+  return !value || value === '0' || value === 0 || value === '00000000-0000-0000-0000-000000000000';
+};
+
+/**
  * Converts provided string to a slug.
  * @param {string} str string to be coverted to a slug
  */

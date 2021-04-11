@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.slug = exports.buildKeys = exports.buildKey = exports.camelResponse = exports.camelKeys = void 0;
+exports.slug = exports.isIdEmpty = exports.buildKeys = exports.buildKey = exports.camelResponse = exports.camelKeys = void 0;
 var lodash_1 = require("lodash");
 var camelKeys = function (result) {
     if (Array.isArray(result)) {
@@ -48,6 +48,19 @@ var buildKeys = function (keys) {
     return keys.map(function (key) { return exports.buildKey(key); });
 };
 exports.buildKeys = buildKeys;
+/**
+ * Returns true if passed value is an empty ID which could be:
+ * - empty string or null or undefined
+ * - string '0'
+ * - number 0
+ * - guid '00000000-0000-0000-0000-000000000000'
+ * @param {string|number} value
+ * @returns {boolean} True if value represents empty ID
+ */
+var isIdEmpty = function (value) {
+    return !value || value === '0' || value === 0 || value === '00000000-0000-0000-0000-000000000000';
+};
+exports.isIdEmpty = isIdEmpty;
 /**
  * Converts provided string to a slug.
  * @param {string} str string to be coverted to a slug
