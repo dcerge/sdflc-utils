@@ -7,7 +7,7 @@ exports.roundNumberValues = exports.roundNumberValue = void 0;
  * @param {number} value
  */
 var roundNumberValue = function (value, decimals) {
-    return isNaN(value) ? NaN : Number(Number(value).toFixed(decimals || 2));
+    return isNaN(value) ? value : Number(Number(value).toFixed(decimals || 2));
 };
 exports.roundNumberValue = roundNumberValue;
 /**
