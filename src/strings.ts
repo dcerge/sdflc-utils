@@ -85,4 +85,4 @@ export const randomString = (length: number, alphabet?: string) => {
   }
 
   return value;
-}
+};

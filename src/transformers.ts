@@ -19,7 +19,7 @@ export const buildHierarchy = (arr: any[], idField: string, parentIdField: strin
     return acc;
   }, {});
 
-  for (let key in mappedArr) {
+  for (const key in mappedArr) {
     const item = mappedArr[key];
     const parentId = item[parentIdField];
 

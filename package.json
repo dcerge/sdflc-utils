@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "rimraf ./build && tsc",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "test": "jest --config jest.config.ts",
     "prepare": "husky install"
   },

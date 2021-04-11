@@ -4,11 +4,7 @@
     "node": true,
     "es2020": true
   },
-  "extends": [
-    "plugin:jest/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:jest/recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -27,6 +23,6 @@
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }
