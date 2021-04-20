@@ -1,6 +1,6 @@
 {
   "name": "@sdflc/utils",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A set of utilites used in the @sdflc libraries and related projects. Purpose is to minimize usage of 3rd party libraries.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
