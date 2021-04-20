@@ -1,6 +1,6 @@
 {
   "name": "@sdflc/utils",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A set of utilites used in the @sdflc libraries and related projects. Purpose is to minimize usage of 3rd party libraries.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -11,7 +11,7 @@
     "build": "rimraf ./build && tsc",
     "lint": "eslint . --ext .ts --fix",
     "test": "jest --config jest.config.ts",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
