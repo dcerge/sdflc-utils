@@ -347,3 +347,150 @@ const map2 = mapArrayBy(arr, ['a', 'b']); =>
 //    b: { BBB: { a: 'AAA', b: 'BBB'}, DDD: { a: 'CCC', b: 'DDD' } }
 //  }
 ```
+
+## flattenHierarchy(flattenHierarchy = (arr: any[], nameForChildren: string, opt?: FlattenHierarchyOptions))
+
+Flattens an array objects that have children.
+
+```js
+const arr = [
+  {
+    id: '1',
+    value: 'root',
+    parentId: null,
+    children: [
+      {
+        id: '2',
+        value: 'child 1.1',
+        parentId: '1',
+        children: [
+          {
+            id: '4',
+            value: 'child 2.1',
+            parentId: '2',
+            children: [],
+          },
+        ],
+      },
+      {
+        id: '3',
+        value: 'child 1.2',
+        parentId: '1',
+        children: [
+          {
+            id: '5',
+            value: 'child 3.1',
+            parentId: '3',
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '6',
+    value: 'child 3',
+    parentId: null,
+    children: [],
+  },
+];
+
+const dst = flattenHierarchy(src, 'children');
+
+// => dst = [
+//   {
+//     id: '1',
+//     value: 'root',
+//     parentId: null,
+//     children: [...]
+//   },
+//   {
+//     id: '2',
+//     value: 'child 1.1',
+//     parentId: '1',
+//     children: [...],
+//   },
+//   {
+//     id: '4',
+//     value: 'child 2.1',
+//     parentId: '2',
+//     children: [],
+//   },
+//   {
+//     id: '3',
+//     value: 'child 1.2',
+//     parentId: '1',
+//     children: [...],
+//   },
+//   {
+//     id: '5',
+//     value: 'child 3.1',
+//     parentId: '3',
+//     children: [],
+//   },
+//   {
+//     id: '6',
+//     value: 'child 3',
+//     parentId: null,
+//     children: [],
+//   },
+// ];
+```
+
+## getLowestLevelItems = (arr: any[], idField: string, parentIdField: string, nameForChildren: string, setRoot?: boolean)
+
+Gets a flat array that represents hierarchical data (ie, each element has `id` and `parendId` props), then it builds hierarchy with this array and finally it returns only the lowest in the hierarchy items.
+
+```js
+const src = [
+  {
+    id: '1',
+    value: 'root',
+    parentId: null,
+  },
+  {
+    id: '4',
+    value: 'child 2.1',
+    parentId: '2',
+  },
+  {
+    id: '2',
+    value: 'child 1.1',
+    parentId: '1',
+  },
+  {
+    id: '3',
+    value: 'child 1.2',
+    parentId: '1',
+  },
+  {
+    id: '5',
+    value: 'child 3.1',
+    parentId: '3',
+  },
+  {
+    id: '6',
+    value: 'orphan',
+    parentId: '9',
+  },
+];
+
+const dst = getLowestLevelItems(src, 'id', 'parentId', 'children', true);
+
+// => dst = [
+//   {
+//     id: '4',
+//     value: 'child 2.1',
+//     parentId: '2',
+//     children: [],
+//     rootId: '1',
+//   },
+//   {
+//     id: '5',
+//     value: 'child 3.1',
+//     parentId: '3',
+//     children: [],
+//     rootId: '1',
+//   },
+// ];
+```

@@ -21,7 +21,7 @@ import { doesValueMatchAlphabet, isLengthBetween, areStringsEqual, replaceAt, in
 import { extractLanguages } from './languages';
 import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from './keys';
 import { roundNumberValue, roundNumberValues } from './numbers';
-import { buildHierarchy, mapArrayBy } from './transformers';
+import { buildHierarchy, mapArrayBy, flattenHierarchy, getLowestLevelItems } from './transformers';
 
 export {
   arrayToObject,
@@ -64,4 +64,6 @@ export {
   roundNumberValues,
   buildHierarchy,
   mapArrayBy,
+  flattenHierarchy,
+  getLowestLevelItems,
 };
