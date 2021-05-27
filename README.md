@@ -189,7 +189,7 @@ const result = onlyPropsOf(obj, User);
 
 ## camelKeys(obj: any)
 
-Uses lodash's `mapKeys` and `camelCase` to convert object's property names to camel case. IF the `obj` is an array then it goes all over the array items.
+Uses lodash's `mapKeys` and `camelCase` to convert object's property names to camel case. If the `obj` is an array then it goes all over the array items.
 
 ```js
 const dbItems = [
@@ -221,7 +221,7 @@ buildKey(['PassWORD', ['ABC', '123']]); // => ['password', 'abc-123']
 
 ## isIdEmpty(value: string | number | undefined | null)
 
-Checks if passed ID value is empty. An ID value is empty when it is null, undefined, equals to '0', 0 or '00000000-0000-0000-0000-000000000000'
+Checks if passed ID value is empty. An ID value is empty when it is null, undefined, equals to `0`, `'0'` or `'00000000-0000-0000-0000-000000000000'`
 
 ```js
 isIdEmpty('0'); // => true
