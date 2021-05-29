@@ -494,3 +494,97 @@ const dst = getLowestLevelItems(src, 'id', 'parentId', 'children', true);
 //   },
 // ];
 ```
+
+# Date Helpers
+
+## createStartPeriod(args: any)
+
+In the `args` the the function expects an object with `{ year, month, day }` and returns a string with time `00:00:00.000Z` addded.
+
+```
+const start = dataTimeHelpers.createStartPeriod({ year: 2021, month: 5, day: 31 })
+// => '2021-05-31T00:00:00.000Z'
+```
+
+## createEndPeriod(args: any)
+
+In the `args` the the function expects an object with `{ year, month, day }` and returns a string with time `23:59:59.999Z` addded.
+
+```
+const start = dataTimeHelpers.createEndPeriod({ year: 2021, month: 5, day: 31 })
+// => '2021-05-31T23:59:59.999Z'
+```
+
+## createPeriod(periodType: string, date: string, opt?: any)
+
+Creates a period according period (start and end date/time) type and provided date.
+
+```
+const start = dataTimeHelpers.createPeriod(DateTimeHelpers.PeriodTypes.MTD, )
+// => {
+//      startDate: 2021-05-01T00:00:00.000Z (Date),
+//      endDate: 2021-05-30T23:59:59.999Z (Date),
+//    }
+```
+
+Possible period types:
+
+- MTD - from the start of month till provided date (including),
+- QTD - from the start of quarter till provided date (including),
+- YTD - from the start of year till provided date (including),
+- L1M - Period starts a month from provided date till the date (including),
+- L3M - Period starts 3 months from provided date till the date (including),
+- L6M - Period starts 6 month till provided date till the date (including),
+- L12M - Period starts 12 month till provided date till the date (including),
+- MONTH - from first to last day of month for provided date,
+- YEAR - from first day of January till December 31 for provided date.
+
+Possible options:
+
+- format - when true returns startDate and endDate as strings. Example, '2021-05-01T00:00:00.000Z'
+- utc - use UTC year, month and date
+
+## createRangePeriod(startDate: string, endDate: string, opt?: any)
+
+Creates an object `{ startDate, endDate }` from provided strings. The `opt` parameter has the same structure as for the `createPeriod`
+
+```
+const period = dataTimeHelpers.createRangePeriod('2020-05-01T00:00:00.000Z', '2021-05-30T23:59:59.999Z', { utc: true })
+// => {
+//      startDate: new Date('2020-05-01T00:00:00.000Z'),
+//      endDate: new Date('2021-05-30T23:59:59.999Z'),
+//    }
+```
+
+## createRangePeriodLastYear(startDate: string, endDate: string, opt?: any)
+
+Creates an object `{ startDate, endDate }` from provided strings but for the last year. The `opt` parameter has the same structure as for the `createPeriod`
+
+```
+const period = dataTimeHelpers.createRangePeriod('2021-01-01T00:00:00.000Z', '2021-12-31T23:59:59.999Z', { utc: true })
+// => {
+//      startDate: new Date('2020-01-01T00:00:00.000Z'),
+//      endDate: new Date('2020-12-31T23:59:59.999Z'),
+//   }
+```
+
+## createYearPeriod(year: number, opt?: any)
+
+Creates an object `{ startDate, endDate }` for provided year. The `opt` parameter has the same structure as for the `createPeriod`
+
+```
+const period = dataTimeHelpers.createYearPeriod(2021)
+// => {
+//      startDate: new Date('2021-01-01T00:00:00.000Z'),
+//      endDate: new Date('2021-12-31T23:59:59.999Z'),
+//    }
+```
+
+## getMonthName(monthNo: number)
+
+Returns name for provided month number (0 based).
+
+```
+const name = dataTimeHelpers.getMonthName(0);
+// => Jan.
+```

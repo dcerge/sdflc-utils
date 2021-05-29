@@ -41,6 +41,7 @@
     "husky": "^6.0.0"
   },
   "dependencies": {
+    "dayjs": "^1.10.5",
     "lodash": "^4.17.20"
   },
   "repository": {

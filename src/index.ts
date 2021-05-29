@@ -22,6 +22,7 @@ import { extractLanguages } from './languages';
 import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from './keys';
 import { roundNumberValue, roundNumberValues } from './numbers';
 import { buildHierarchy, mapArrayBy, flattenHierarchy, getLowestLevelItems } from './transformers';
+import { dataTimeHelpers, DateTimeHelpers } from './dateHelpers';
 
 export {
   arrayToObject,
@@ -66,4 +67,6 @@ export {
   mapArrayBy,
   flattenHierarchy,
   getLowestLevelItems,
+  dataTimeHelpers,
+  DateTimeHelpers,
 };
