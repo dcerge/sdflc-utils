@@ -1,4 +1,5 @@
 import { camelCase, mapKeys } from 'lodash';
+import { UUID_EMPTY } from './constants';
 
 export const camelKeys = (result: any) => {
   if (Array.isArray(result)) {
@@ -57,7 +58,7 @@ export const buildKeys = (keys: any[]) => {
  * @returns {boolean} True if value represents empty ID
  */
 export const isIdEmpty = (value: string | number | undefined | null) => {
-  return !value || value === '0' || value === 0 || value === '00000000-0000-0000-0000-000000000000';
+  return !value || value === '0' || value === 0 || value === UUID_EMPTY;
 };
 
 /**

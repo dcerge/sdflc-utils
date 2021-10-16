@@ -96,7 +96,7 @@ const outValues = roundNumberValues(inValues);
 // ]
 ```
 
-# Strigns
+# Strings
 
 ## doesValueMatchAlphabet(value: string, alphabet: string)
 

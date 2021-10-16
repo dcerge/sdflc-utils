@@ -23,6 +23,8 @@ import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from '
 import { roundNumberValue, roundNumberValues } from './numbers';
 import { buildHierarchy, mapArrayBy, flattenHierarchy, getLowestLevelItems } from './transformers';
 import { dataTimeHelpers, DateTimeHelpers } from './dateHelpers';
+import { LoggerInterface, LoggerLevels } from './interfaces';
+import { Logger } from './logger';
 
 export {
   arrayToObject,
@@ -69,4 +71,7 @@ export {
   getLowestLevelItems,
   dataTimeHelpers,
   DateTimeHelpers,
+  LoggerInterface,
+  LoggerLevels,
+  Logger,
 };
