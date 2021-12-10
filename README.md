@@ -588,3 +588,104 @@ Returns name for provided month number (0 based).
 const name = dataTimeHelpers.getMonthName(0);
 // => Jan.
 ```
+
+# StrOrderHelpers
+
+This is a class that helps to work with alphabetic order numbers which are used for sorting rows.
+
+## constructor(opt)
+
+Constructor accepts the `opt` object with the following properties:
+
+- start (string) - start value
+- step (string) - step value that will be used to increase/decrease
+- base (number) - value base which by default is 36 (English alphabet plus numbers 0-9)
+
+```
+const order = new StrOrderHelpers({ start: '100', step: '1' });
+```
+
+## reset()
+
+Resets current counter value back to start value
+
+```
+const order = new StrOrderHelpers({ start: '100', step: '1' });
+order.increase(); // => '101'
+order.reset(); // => '100'
+```
+
+## current()
+
+Returns current counter value
+
+```
+const order = new StrOrderHelpers({ start: '100', step: '1' });
+order.increase(); // => '101'
+order.increase(); // => '102'
+order.current(); // => '101'
+```
+
+## addValue(value: string)
+
+Increases current counter by the value passed in as a parameter.
+
+```
+const order = new StrOrderHelpers({ start: '100', step: '1' });
+order.addValue('a'); // => '10a'
+```
+
+## substractValue(value: string)
+
+Decreases current counter by the value passed in as a parameter.
+
+```
+const order = new StrOrderHelpers({ start: '10a', step: '1' });
+order.desubstractValuecreaseValue('a'); // => '100'
+```
+
+## increase()
+
+Increases current counter by the step value passed to the constructor.
+
+```
+const order = new StrOrderHelpers({ start: '100', step: '5' });
+order.increase(); // => '105'
+order.increase(); // => '10a'
+```
+
+## decrease()
+
+Decreases current counter by the step value passed to the constructor.
+
+```
+const order = new StrOrderHelpers({ start: '101', step: '1' });
+order.decrease(); // => '100'
+```
+
+## add(valueA: string, valueB: string)
+
+Adds valueB to the valueA and returns result
+
+```
+const order = new StrOrderHelpers();
+order.add('100', 'a'); // => '10a'
+```
+
+## substract(valueA: string, valueB: string)
+
+Substracts valueB from the valueA and returns result
+
+```
+const order = new StrOrderHelpers();
+order.substract('10a', 'a'); // => '100'
+```
+
+## valueBetween(valueA: string, valueB: string)
+
+Finds values in the middle between valueA and valueB. If nothing found returns null value
+
+```
+const order = new StrOrderHelpers();
+order.valueBetween('aaa', 'ccc'); // => 'bbb'
+```

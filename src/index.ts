@@ -25,6 +25,7 @@ import { buildHierarchy, mapArrayBy, flattenHierarchy, getLowestLevelItems } fro
 import { dataTimeHelpers, DateTimeHelpers } from './dateHelpers';
 import { LoggerInterface, LoggerLevels } from './interfaces';
 import { Logger } from './logger';
+import { StrOrderHelpers } from './strOrderHelpers';
 
 export {
   arrayToObject,
@@ -74,4 +75,5 @@ export {
   LoggerInterface,
   LoggerLevels,
   Logger,
+  StrOrderHelpers,
 };

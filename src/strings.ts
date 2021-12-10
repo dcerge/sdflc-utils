@@ -1,3 +1,6 @@
+const DEFAULT_LENGTH = 16;
+const DEFAULT_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+
 /**
  * Verifies if string contains only of letters from provided alphabet.
  * @param {string} value a string to check.
@@ -76,8 +79,8 @@ export const insertAt = (str: string, index: number, insert: string): string => 
  */
 export const randomString = (length: number, alphabet?: string) => {
   let value = '';
-  const actualLength = isNaN(length) || length < 1 ? 16 : length;
-  const actualAlphabet = alphabet || 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+  const actualLength = isNaN(length) || length < 1 ? DEFAULT_LENGTH : length;
+  const actualAlphabet = alphabet || DEFAULT_ALPHABET;
   const alphabetSize = actualAlphabet.length;
 
   for (let idx = 0; idx < actualLength; idx++) {
