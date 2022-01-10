@@ -1,4 +1,4 @@
-import { arrayToObject, arrToUpperCase, arrToLowerCase } from './arrays';
+import { arrayToObject, arrToUpperCase, arrToLowerCase, arrToChunks } from './arrays';
 import { converStringToValue } from './converters';
 import {
   VALUE_TYPES,
@@ -17,7 +17,15 @@ import {
 } from './constants';
 import { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates, coordinatesParamNames } from './coordinates';
 import { setNullOnEmptyString, onlyPropsOf } from './objects';
-import { doesValueMatchAlphabet, isLengthBetween, areStringsEqual, replaceAt, insertAt, randomString } from './strings';
+import {
+  doesValueMatchAlphabet,
+  isLengthBetween,
+  areStringsEqual,
+  replaceAt,
+  insertAt,
+  randomString,
+  formatString,
+} from './strings';
 import { extractLanguages } from './languages';
 import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from './keys';
 import { roundNumberValue, roundNumberValues } from './numbers';
@@ -31,6 +39,7 @@ export {
   arrayToObject,
   arrToUpperCase,
   arrToLowerCase,
+  arrToChunks,
   onlyPropsOf,
   converStringToValue,
   VALUE_TYPES,
@@ -57,6 +66,7 @@ export {
   replaceAt,
   insertAt,
   randomString,
+  formatString,
   extractLanguages,
   camelKeys,
   camelResponse,

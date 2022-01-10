@@ -1,3 +1,5 @@
+import { FormatStringOptInterface } from './interfaces/formatStringOptInterface';
+
 const DEFAULT_LENGTH = 16;
 const DEFAULT_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
 
@@ -88,4 +90,47 @@ export const randomString = (length: number, alphabet?: string) => {
   }
 
   return value;
+};
+
+export const escapeRegExp = (str: string) => {
+  return (str || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+};
+
+/**
+ * Replaces variables by their values in provided string template
+ * @param str string template where to replace variable to their values
+ * @param obj an object that has props
+ * @param opt options for the replacing
+ * @returns formatted string
+ */
+export const formatString = (str: string, obj: any, opt?: FormatStringOptInterface) => {
+  if (str == null || typeof str !== 'string' || obj == null || typeof obj !== 'object') {
+    return str;
+  }
+
+  const leftWrapper = escapeRegExp(opt?.leftWrapper || '{{');
+  const rightWrapper = escapeRegExp(opt?.rightWrapper || '}}');
+
+  let result: string = str;
+  const expression = `${leftWrapper}([^${leftWrapper}${rightWrapper}]+)${rightWrapper}`;
+  const re = new RegExp(expression, 'gi');
+  const matches = result.matchAll(re);
+
+  if (!matches) {
+    return result;
+  }
+
+  for (const match of Array.from(matches)) {
+    let replaceWith = '';
+
+    if (obj[match[1]] != null) {
+      replaceWith = obj[match[1]];
+    }
+
+    if (replaceWith) {
+      result = result.replace(new RegExp(escapeRegExp(match[0]), 'g'), replaceWith);
+    }
+  }
+
+  return result;
 };

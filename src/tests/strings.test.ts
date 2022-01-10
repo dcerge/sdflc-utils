@@ -1,5 +1,14 @@
+import dayjs from 'dayjs';
 import { ALPHABET } from './../constants';
-import { doesValueMatchAlphabet, isLengthBetween, areStringsEqual, replaceAt, insertAt, randomString } from '../index';
+import {
+  doesValueMatchAlphabet,
+  isLengthBetween,
+  areStringsEqual,
+  replaceAt,
+  insertAt,
+  randomString,
+  formatString,
+} from '../index';
 
 describe('Strings tests', () => {
   test('Strings: doesValueMatchAlphabet', () => {
@@ -31,5 +40,21 @@ describe('Strings tests', () => {
   test('Strings: randomString', () => {
     const str = randomString(16, 'ABCDEF0123456789');
     expect(str).toHaveLength(16);
+  });
+
+  test('Strings: formatString with default opt', () => {
+    const str = 'Hello {{name}}! Today is {{YYYY-MM-DD}}. Missing {{var}}';
+    const obj = { name: 'John', 'YYYY-MM-DD': dayjs('2022-01-01').format('YYYY-MM-DD') };
+    const dst = 'Hello John! Today is 2022-01-01. Missing {{var}}';
+
+    expect(formatString(str, obj)).toEqual(dst);
+  });
+
+  test('Strings: formatString with wrappers {}', () => {
+    const str = 'Hello {name}! Today is {YYYY-MM-DD}. Missing {var}';
+    const obj = { name: 'John', 'YYYY-MM-DD': dayjs('2022-01-01').format('YYYY-MM-DD') };
+    const dst = 'Hello John! Today is 2022-01-01. Missing {var}';
+
+    expect(formatString(str, obj, { leftWrapper: '{', rightWrapper: '}' })).toEqual(dst);
   });
 });

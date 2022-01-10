@@ -37,6 +37,28 @@ const res = arrToUpperCase(arr);
 // res = ['aaa', 'bbb']
 ```
 
+## arrToChunks(arr: any[], chunkSize: number)
+
+Splits an array into sub-arrays with 'chunkSize' elements in each array
+
+```js
+const src = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+const res1 = arrToChunks(src, 3);
+// res1 = [[1,2,3], [4,5,6], [7,8,9], [0]]
+const res2 = arrToChunks(src, 5);
+// res2 = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 0]];
+const res3 = arrToChunks(src, 0);
+// res3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+```
+
+Returns a new array which has each tring lower cased.
+
+```js
+const arr = ['AAA', 'BBB'];
+const res = arrToUpperCase(arr);
+// res = ['aaa', 'bbb']
+```
+
 # Converters
 
 ## converStringToValue(value: any, type: string)
@@ -150,6 +172,18 @@ Generates a random string of `length` charatecer consisting of letters from the 
 
 ```js
 randomString(5, 'ABC0123456789'); // => possible result is 'D09A3'
+```
+
+## formatString(str: string, obj: any, opt?: FormatStringOptInterface)
+
+Replaces variables by their values in provided string template
+
+```js
+const str = 'Hello {name}! Today is {YYYY-MM-DD}. Missing {var}';
+const obj = { name: 'John', 'YYYY-MM-DD': dayjs('2022-01-01').format('YYYY-MM-DD') };
+
+const res = formatString(str, obj, { leftWrapper: '{', rigthWrapper: '}' });
+// res => 'Hello John! Today is 2022-01-01. Missing {var}'
 ```
 
 # Objects

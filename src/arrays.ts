@@ -37,3 +37,23 @@ export const arrToUpperCase = (arr: string[]) => {
 export const arrToLowerCase = (arr: string[]) => {
   return (arr || []).map((item) => (item || '').toLowerCase());
 };
+
+/**
+ * Split an array into chunks where each chunk should have 'chunkSize' elements
+ * @param arr array to split into chunks
+ * @param chunkSize number defining how many items should be in each chunk of result arrays
+ * @returns array of arrays
+ */
+export const arrToChunks = (arr: any[], chunkSize: number) => {
+  const R: any[] = [];
+
+  if (chunkSize == null || isNaN(chunkSize) || chunkSize < 1) {
+    return arr;
+  }
+
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    R.push(arr.slice(i, i + chunkSize));
+  }
+
+  return R;
+};

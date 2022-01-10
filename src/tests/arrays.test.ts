@@ -1,4 +1,4 @@
-import { arrayToObject, arrToUpperCase, arrToLowerCase } from '../';
+import { arrayToObject, arrToUpperCase, arrToLowerCase, arrToChunks } from '../';
 
 describe('Array tests', () => {
   test('Arrays: arrayToObject', () => {
@@ -30,5 +30,19 @@ describe('Array tests', () => {
 
     expect(arrToLowerCase(src)).toEqual(dst);
     expect(arrToLowerCase([])).toEqual([]);
+  });
+
+  test('Arrays: arrToChunks', () => {
+    const src = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const dst3 = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0]];
+    const dst5 = [
+      [1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 0],
+    ];
+
+    expect(arrToChunks(src, 3)).toEqual(dst3);
+    expect(arrToChunks(src, 5)).toEqual(dst5);
+    expect(arrToChunks(src, 0)).toEqual(src);
+    expect(arrToChunks([], 3)).toEqual([]);
   });
 });
