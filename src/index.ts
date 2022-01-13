@@ -34,6 +34,7 @@ import { dataTimeHelpers, DateTimeHelpers } from './dateHelpers';
 import { LoggerInterface, LoggerLevels } from './interfaces';
 import { Logger } from './logger';
 import { StrOrderHelpers } from './strOrderHelpers';
+import { MeasureTool } from './measureTool';
 
 export {
   arrayToObject,
@@ -86,4 +87,5 @@ export {
   LoggerLevels,
   Logger,
   StrOrderHelpers,
+  MeasureTool,
 };
