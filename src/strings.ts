@@ -108,29 +108,20 @@ export const formatString = (str: string, obj: any, opt?: FormatStringOptInterfa
     return str;
   }
 
-  const leftWrapper = escapeRegExp(opt?.leftWrapper || '{{');
-  const rightWrapper = escapeRegExp(opt?.rightWrapper || '}}');
+  const leftWrapper = opt ? opt.leftWrapper || '' : '{{';
+  const rightWrapper = opt ? opt.rightWrapper || '' : '}}';
+
+  const vars = Object.keys(obj).reduce((acc: any, key: string) => {
+    const varName = `${leftWrapper}${key}${rightWrapper}`;
+    acc[varName] = obj[key];
+    return acc;
+  }, {});
 
   let result: string = str;
-  const expression = `${leftWrapper}([^${leftWrapper}${rightWrapper}]+)${rightWrapper}`;
-  const re = new RegExp(expression, 'gi');
-  const matches = result.matchAll(re);
 
-  if (!matches) {
-    return result;
-  }
-
-  for (const match of Array.from(matches)) {
-    let replaceWith = '';
-
-    if (obj[match[1]] != null) {
-      replaceWith = obj[match[1]];
-    }
-
-    if (replaceWith) {
-      result = result.replace(new RegExp(escapeRegExp(match[0]), 'g'), replaceWith);
-    }
-  }
+  Object.keys(vars).forEach((variable) => {
+    result = result.replace(new RegExp(escapeRegExp(variable), 'gi'), vars[variable]);
+  });
 
   return result;
 };

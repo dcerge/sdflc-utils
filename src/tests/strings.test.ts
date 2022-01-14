@@ -57,4 +57,12 @@ describe('Strings tests', () => {
 
     expect(formatString(str, obj, { leftWrapper: '{', rightWrapper: '}' })).toEqual(dst);
   });
+
+  test('Strings: formatString with empty wrappers', () => {
+    const str = 'Hello {name}! Today is {YYYY-MM-DD}. Missing {var}';
+    const obj = { '{name}': 'John', '{YYYY-MM-DD}': dayjs('2022-01-01').format('YYYY-MM-DD') };
+    const dst = 'Hello John! Today is 2022-01-01. Missing {var}';
+
+    expect(formatString(str, obj, { leftWrapper: '', rightWrapper: '' })).toEqual(dst);
+  });
 });
