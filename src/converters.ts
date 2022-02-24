@@ -5,8 +5,7 @@ import { VALUE_TYPES } from './constants';
  * @param {any} value string value to be converted
  * @param {string} type name of type to convert the string to
  */
-export const converStringToValue = (value: any, type: string) => {
-  const valueType = type.toUpperCase();
+export const converStringToValue = (value: any, valueType: number) => {
   switch (valueType) {
     case VALUE_TYPES.STRING:
       return value;

@@ -34,7 +34,7 @@ describe('Keys tests', () => {
     expect(isIdEmpty(undefined)).toEqual(true);
     expect(isIdEmpty('')).toEqual(true);
     expect(isIdEmpty('0')).toEqual(true);
-    expect(isIdEmpty('00000000-0000-0000-0000-000000000000')).toEqual(true);
+    expect(isIdEmpty('00000000-0000-4000-9000-000000000000')).toEqual(true);
     expect(isIdEmpty(0)).toEqual(true);
     expect(isIdEmpty(1)).toEqual(false);
     expect(isIdEmpty('1')).toEqual(false);
