@@ -33,6 +33,11 @@ export const ACCESS_RIGHTS: any = {
   RUN: 32,
 };
 
+export const SORT_ORDER: any = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 export const ALPHABET_AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 export const ALPHABET_az = 'abcdefghijklmnopqrstuvwxyz';

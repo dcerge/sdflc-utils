@@ -10,6 +10,5 @@
   "useTabs": false,
   "endOfLine": "auto",
   "htmlWhitespaceSensitivity": "ignore",
-  "jsxBracketSameLine": false,
   "jsxSingleQuote": true
 }

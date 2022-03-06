@@ -99,8 +99,8 @@ describe('dataTimeHelpers tests', () => {
   });
 
   test('getMonthName', () => {
-    expect(dataTimeHelpers.getMonthName(0)).toEqual('Jan.');
-    expect(dataTimeHelpers.getMonthName(1)).toEqual('Feb.');
-    expect(dataTimeHelpers.getMonthName(11)).toEqual('Dec.');
+    expect(dataTimeHelpers.getMonthName(0)).toEqual('Jan');
+    expect(dataTimeHelpers.getMonthName(1)).toEqual('Feb');
+    expect(dataTimeHelpers.getMonthName(11)).toEqual('Dec');
   });
 });
