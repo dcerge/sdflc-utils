@@ -35,9 +35,11 @@ export const buildKey = (keys: any) => {
     return slug(keys);
   } else if (typeof keys === 'number') {
     return slug(keys.toString());
+  } else if (typeof keys === 'object') {
+    return JSON.stringify(keys);
   }
 
-  return slug(keys.toString());
+  return '';
 };
 
 /**
