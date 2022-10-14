@@ -23,6 +23,42 @@ export const camelResponse = (result: any) => {
   return camelKeys(result);
 };
 
+export const pascalCase = (name: string): string => {
+  if (!name) {
+    return name;
+  }
+
+  const tmp = camelCase(name);
+  const result = tmp.charAt(0).toUpperCase() + tmp.slice(1);
+
+  return result;
+};
+
+export const pascalCases = (args: any): any => {
+  const { src, mapKey } = args || {};
+
+  if (src == null) {
+    return src;
+  }
+
+  if (Array.isArray(src)) {
+    return src.map((item) => pascalCases({ src: item, mapKey }));
+  } else if (typeof src === 'object') {
+    const dst = Object.keys(src).reduce((acc: any, key: string) => {
+      const key2use = mapKey?.[key] ?? pascalCase(key);
+      const value = src[key];
+
+      acc[key2use] = pascalCases({ src: value, mapKey });
+
+      return acc;
+    }, {});
+
+    return dst;
+  }
+
+  return src;
+};
+
 /**
  * Converts string/array/number to a key value.
  * A key value is a uppercased string.

@@ -219,6 +219,32 @@ const result = onlyPropsOf(obj, User);
 // }
 ```
 
+## compactObject(obj: any): any
+
+Takes and object or an array and returns a new object without properties that have values null or undefined.
+
+```js
+const src = {
+  firstName: 'John',
+  lastName: '',
+  birthday: null,
+  obj: {
+    propA: 'A',
+    propB: null,
+  },
+};
+
+const dst = compactObject(src);
+
+// => dst = {
+//   firstName: 'John',
+//   lastName: '',
+//   obj: {
+//     propA: 'A',
+//   },
+// };
+```
+
 # Keys
 
 ## camelKeys(obj: any)
@@ -271,6 +297,34 @@ Converts the source string `str` to a slug:
 slug('some/path/to/page.html'); // => 'some-path-to-page-html'
 slug('some!value@email.com'); // => 'some-value-email-com'
 slug('some   value to slugify!!!'); // => 'some-value-to-slugify'
+```
+
+## pascalCase(name: string): string
+
+Converts string to PascalCase.
+
+```js
+pascalCase('pascal_case'); // => 'PascalCase'
+pascalCase('pascal case'); // => 'PascalCase'
+pascalCase('pascalCase'); // => 'PascalCase'
+```
+
+## pascalCases(args: any): any
+
+Takes an array of objects or an object and converts objects property names to PascalCase. Uses lodash's function `camelCase` under the hood.
+
+```js
+const src = {
+  snake_case: 'snake_case',
+  camelCase: 'camelCase',
+};
+
+const dst = pascalCases({ src });
+
+// => dst = {
+//   SnakeCase: 'snake_case',
+//   CamelCase: 'camelCase',
+// }
 ```
 
 # Transformers
@@ -722,4 +776,51 @@ Finds values in the middle between valueA and valueB. If nothing found returns n
 ```
 const order = new StrOrderHelpers();
 order.valueBetween('aaa', 'ccc'); // => 'bbb'
+```
+
+# URL Params
+
+## buildURLSearchParams(data: any)
+
+Creates an object of type URLSearchParams and adds properties of received object `data` to its params. The `data` can be an array or a complex object.
+
+```js
+const src = {
+  fieldA: 'A',
+  fieldB: [
+    {
+      arrA: '1',
+      arrB: '2',
+      arrC: {
+        subA: '100',
+      },
+    },
+  ],
+};
+
+const params = buildURLSearchParams(src);
+
+const str = params.toString();
+
+// => str = 'fieldA=A&fieldB%5B0%5D.arrA=1&fieldB%5B0%5D.arrB=2&fieldB%5B0%5D.arrC.subA=100'
+```
+
+# Geo Helpers
+
+## calcDistance(args: CalcDistanceArgs)
+
+Calculates distance between two coordinates with latitude and longitude. The result in kilometers.
+
+```js
+const position1 = {
+  latitude: 50.947718,
+  longitude: -114.123893,
+};
+const position2 = {
+  latitude: 50.947745,
+  longitude: -115.121994,
+};
+
+const distance = calcDistance({ position1, position2 });
+// => distance = 69.9224684913042
 ```

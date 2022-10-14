@@ -1,4 +1,4 @@
-import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from '../';
+import { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug, pascalCase, pascalCases } from '../';
 
 describe('Keys tests', () => {
   test('Keys: camelKeys', () => {
@@ -44,5 +44,61 @@ describe('Keys tests', () => {
     expect(slug('some/path/to/page.html')).toEqual('some-path-to-page-html');
     expect(slug('some!value@email.com')).toEqual('some-value-email-com');
     expect(slug('some   value to slugify!!!')).toEqual('some-value-to-slugify');
+  });
+
+  test('Keys: pascalCase', () => {
+    expect(pascalCase('pascal_case')).toEqual('PascalCase');
+    expect(pascalCase('pascal case')).toEqual('PascalCase');
+    expect(pascalCase('pascalCase')).toEqual('PascalCase');
+  });
+
+  test('Keys: pascalCases', () => {
+    expect(
+      pascalCases({
+        src: {
+          snake_case: 'snake_case',
+          camelCase: 'camelCase',
+        },
+      }),
+    ).toEqual({
+      SnakeCase: 'snake_case',
+      CamelCase: 'camelCase',
+    });
+
+    expect(
+      pascalCases({
+        src: [
+          {
+            snake_case: 'snake_case',
+            camelCase: 'camelCase',
+          },
+        ],
+      }),
+    ).toEqual([
+      {
+        SnakeCase: 'snake_case',
+        CamelCase: 'camelCase',
+      },
+    ]);
+
+    expect(
+      pascalCases({
+        src: {
+          props: [
+            {
+              snake_case: 'snake_case',
+              camelCase: 'camelCase',
+            },
+          ],
+        },
+      }),
+    ).toEqual({
+      Props: [
+        {
+          SnakeCase: 'snake_case',
+          CamelCase: 'camelCase',
+        },
+      ],
+    });
   });
 });

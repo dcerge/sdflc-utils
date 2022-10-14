@@ -20,7 +20,7 @@ export {
   SORT_ORDER,
 } from './constants';
 export { buildCoordinatesStr, extractLatitueLongitude, buildCoordinates, coordinatesParamNames } from './coordinates';
-export { setNullOnEmptyString, onlyPropsOf } from './objects';
+export { setNullOnEmptyString, onlyPropsOf, compactObject } from './objects';
 export {
   doesValueMatchAlphabet,
   isLengthBetween,
@@ -31,7 +31,7 @@ export {
   formatString,
 } from './strings';
 export { extractLanguages } from './languages';
-export { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug } from './keys';
+export { camelKeys, camelResponse, buildKey, buildKeys, isIdEmpty, slug, pascalCase, pascalCases } from './keys';
 export { roundNumberValue, roundNumberValues } from './numbers';
 export { buildHierarchy, mapArrayBy, flattenHierarchy, getLowestLevelItems } from './transformers';
 export { dataTimeHelpers, DateTimeHelpers } from './dateHelpers';
@@ -39,3 +39,5 @@ export { LoggerInterface, LoggerLevels } from './interfaces';
 export { Logger } from './logger';
 export { StrOrderHelpers } from './strOrderHelpers';
 export { MeasureTool } from './measureTool';
+export * from './urlParams';
+export * from './geoHelpers';

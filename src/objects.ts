@@ -39,3 +39,30 @@ export function onlyPropsOf<T>(source: any, destinationType: new () => T): T {
 
   return result;
 }
+
+/**
+ * Takes an object an removes all the props that are undefined
+ * @param obj An object to compact
+ * @returns object
+ */
+export const compactObject = (obj: any): any => {
+  if (obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => compactObject(item));
+  } else if (typeof obj === 'object') {
+    return Object.keys(obj ?? {}).reduce((acc: any, key: string) => {
+      const value = obj[key];
+      if (value != null && (typeof value === 'object' || Array.isArray(value))) {
+        acc[key] = compactObject(value);
+      } else if (obj[key] != undefined) {
+        acc[key] = obj[key];
+      }
+      return acc;
+    }, {});
+  }
+
+  return obj;
+};
