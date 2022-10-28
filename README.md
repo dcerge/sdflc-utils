@@ -19,7 +19,7 @@ const obj = arrayToObject(arr, 'name', 'value');
 
 ## arrToUpperCase(arr: string[])
 
-Returns a new array which has each tring upper cased.
+Returns a new array which has each string upper cased.
 
 ```js
 const arr = ['aaa', 'bbb'];
@@ -29,7 +29,7 @@ const res = arrToUpperCase(arr);
 
 ## arrToLowerCase(arr: string[])
 
-Returns a new array which has each tring lower cased.
+Returns a new array which has each string lower cased.
 
 ```js
 const arr = ['AAA', 'BBB'];
@@ -49,14 +49,6 @@ const res2 = arrToChunks(src, 5);
 // res2 = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 0]];
 const res3 = arrToChunks(src, 0);
 // res3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-```
-
-Returns a new array which has each tring lower cased.
-
-```js
-const arr = ['AAA', 'BBB'];
-const res = arrToUpperCase(arr);
-// res = ['aaa', 'bbb']
 ```
 
 # Converters
