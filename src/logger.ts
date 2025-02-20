@@ -34,22 +34,22 @@ export class Logger {
 
   private defaultDebug(...params: any[]) {
     const args = Array.prototype.slice.call(params);
-    console.log.apply(console, [...args]); // eslint-disable-line
+    console.log.apply(console, [...args]);
   }
 
   private defaultLog(...params: any[]) {
     const args = Array.prototype.slice.call(params);
-    console.log.apply(console, [...args]); // eslint-disable-line
+    console.log.apply(console, [...args]);
   }
 
   private defaultWarn(...params: any[]) {
     const args = Array.prototype.slice.call(params);
-    console.log.apply(console, [...args]); // eslint-disable-line
+    console.log.apply(console, [...args]);
   }
 
   private defaultError(...params: any[]) {
     const args = Array.prototype.slice.call(params);
-    console.error.apply(console, [...args]); // eslint-disable-line
+    console.error.apply(console, [...args]);
   }
 
   public getLevel() {
