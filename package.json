@@ -1,16 +1,23 @@
 {
   "name": "@sdflc/utils",
   "version": "1.0.23",
-  "type": "module",
   "description": "A set of utilites used in the @sdflc libraries and related projects. Purpose is to minimize usage of 3rd party libraries.",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "import": "./build/esm/index.js",
+      "require": "./build/index.js"
+    }
+  },
+  "main": "./build/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/index.d.ts",
   "files": [
     "build/**/*"
   ],
   "scripts": {
-    "build": "rimraf ./build && tsc",
-    "lint": "eslint .",
+    "build": "rimraf ./build && tsc && tsc -p tsconfig.esm.json",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
     "test": "jest --config jest.config.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky",
