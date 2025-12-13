@@ -1,4 +1,5 @@
-import { camelCase, mapKeys } from 'lodash';
+import camelCase from 'lodash/camelCase';
+import mapKeys from 'lodash/mapKeys';
 import { UUID_EMPTY, UUID_ZERO } from './constants';
 
 export const camelKeys = (result: any) => {

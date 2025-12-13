@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import dayjsPluginUTC from 'dayjs/plugin/utc';
-import { padStart } from 'lodash';
+import padStart from 'lodash/padStart';
 
 dayjs.extend(dayjsPluginUTC);
 
