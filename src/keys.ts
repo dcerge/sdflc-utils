@@ -2,18 +2,18 @@ import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
 import { UUID_EMPTY, UUID_ZERO } from './constants';
 
-export const camelKeys = (result: any) => {
+export const camelKeys = (result: any): any => {
   if (Array.isArray(result)) {
-    return result.map((row) => {
-      return mapKeys(row, (value: any, key: string) => {
-        return camelCase(key);
-      });
-    });
+    return result.map((row) => camelKeys(row));
   }
 
-  return mapKeys(result, (value: any, key: string) => {
-    return camelCase(key);
-  });
+  if (result !== null && typeof result === 'object' && !(result instanceof Date)) {
+    const camelResult = mapKeys(result, (_value: any, key: string) => camelCase(key));
+
+    return Object.fromEntries(Object.entries(camelResult).map(([key, value]) => [key, camelKeys(value)]));
+  }
+
+  return result;
 };
 
 export const camelResponse = (result: any) => {
