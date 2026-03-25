@@ -1,7 +1,17 @@
+// ./src/keys.ts
+
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
 import { UUID_EMPTY, UUID_ZERO } from './constants';
 
+// =============================================================================
+// Case Conversion
+// =============================================================================
+
+/**
+ * Recursively converts all keys in an object (or array of objects) to camelCase.
+ * Leaves Date instances, primitives, and null untouched.
+ */
 export const camelKeys = (result: any): any => {
   if (Array.isArray(result)) {
     return result.map((row) => camelKeys(row));
@@ -9,14 +19,21 @@ export const camelKeys = (result: any): any => {
 
   if (result !== null && typeof result === 'object' && !(result instanceof Date)) {
     const camelResult = mapKeys(result, (_value: any, key: string) => camelCase(key));
-
     return Object.fromEntries(Object.entries(camelResult).map(([key, value]) => [key, camelKeys(value)]));
   }
 
   return result;
 };
 
-export const camelResponse = (result: any) => {
+/**
+ * Converts a plain object's keys to camelCase.
+ * Returns the original value unchanged if it is falsy or has a `rows` property
+ * (e.g. raw database result sets that should be handled separately).
+ *
+ * @note If `result.rows` is present the value is returned as-is. Handle the
+ * `rows` array explicitly before passing to this function if camelCasing is needed.
+ */
+export const camelResponse = (result: any): any => {
   if (!result || result.rows) {
     return result;
   }
@@ -24,93 +41,126 @@ export const camelResponse = (result: any) => {
   return camelKeys(result);
 };
 
+/**
+ * Converts a string to PascalCase using lodash camelCase as the base.
+ *
+ * @param name - String to convert. Returns the original value if falsy.
+ */
 export const pascalCase = (name: string): string => {
-  if (!name) {
-    return name;
-  }
+  if (!name) return name;
 
   const tmp = camelCase(name);
-  const result = tmp.charAt(0).toUpperCase() + tmp.slice(1);
-
-  return result;
+  return tmp.charAt(0).toUpperCase() + tmp.slice(1);
 };
 
+/**
+ * Recursively converts all keys in `src` to PascalCase.
+ * An optional `mapKey` object can override the key transformation for specific keys.
+ * Date instances and non-object primitives are returned as-is.
+ *
+ * @param args.src    - The value to transform.
+ * @param args.mapKey - Optional map of original key → desired key overrides.
+ */
 export const pascalCases = (args: any): any => {
+  if (!args || typeof args !== 'object') {
+    return args;
+  }
+
   const { src, mapKey } = args || {};
 
-  if (src == null) {
-    return src;
-  }
+  if (!src) return src;
 
   if (Array.isArray(src)) {
     return src.map((item) => pascalCases({ src: item, mapKey }));
-  } else if (typeof src === 'object') {
-    const dst = Object.keys(src).reduce((acc: any, key: string) => {
+  }
+
+  if (typeof src === 'object' && !(src instanceof Date)) {
+    return Object.keys(src).reduce((acc: any, key: string) => {
       const key2use = mapKey?.[key] ?? pascalCase(key);
-      const value = src[key];
-
-      acc[key2use] = pascalCases({ src: value, mapKey });
-
+      acc[key2use] = pascalCases({ src: src[key], mapKey });
       return acc;
     }, {});
-
-    return dst;
   }
 
   return src;
 };
 
+// =============================================================================
+// Key / Slug Builders
+// =============================================================================
+
 /**
- * Converts string/array/number to a key value.
- * A key value is a uppercased string.
- * @param {any} keys a string or array or number to convert
+ * Converts a string/array/number/object to a slug-based key.
+ * Objects are JSON-serialised; circular references return `""`.
+ *
+ * @param keys - Value to convert to a key string.
  */
-export const buildKey = (keys: any) => {
+export const buildKey = (keys: any): string => {
   if (keys instanceof Array) {
     return slug(keys.join('-'));
   } else if (typeof keys === 'string') {
     return slug(keys);
   } else if (typeof keys === 'number') {
     return slug(keys.toString());
-  } else if (typeof keys === 'object') {
-    return JSON.stringify(keys);
+  } else if (typeof keys === 'object' && keys !== null) {
+    try {
+      return JSON.stringify(keys);
+    } catch {
+      return '';
+    }
   }
 
   return '';
 };
 
 /**
- * Calls buildKey for each items of provided array.
- * @param {string[]} keys array of strings to be processed.
+ * Calls `buildKey` for each item in the provided array.
+ * Returns `[]` for falsy input.
+ *
+ * @param keys - Array of values to convert.
  */
-export const buildKeys = (keys: any[]) => {
-  return keys.map((key) => buildKey(key));
+export const buildKeys = (keys: any[]): string[] => {
+  return (keys || []).map((key) => buildKey(key));
 };
 
+// =============================================================================
+// ID Helpers
+// =============================================================================
+
 /**
- * Returns true if passed value is an empty ID which could be:
- * - empty string or null or undefined
- * - string '0'
- * - number 0
- * - guid '00000000-0000-0000-0000-000000000000'
- * @param {string|number} value
- * @returns {boolean} True if value represents empty ID
+ * Returns `true` if the value represents an empty/unset ID:
+ * - `null`, `undefined`, or empty string `""`
+ * - string `'0'` or number `0`
+ * - `UUID_EMPTY` (`'00000000-0000-4000-9000-000000000000'`)
+ * - `UUID_ZERO`  (`'00000000-0000-0000-0000-000000000000'`)
+ *
+ * @param value - The ID value to check.
  */
-export const isIdEmpty = (value: string | number | undefined | null) => {
+export const isIdEmpty = (value: string | number | undefined | null): boolean => {
   return !value || value === '0' || value === 0 || value === UUID_EMPTY || value === UUID_ZERO;
 };
 
-/**
- * Converts provided string to a slug.
- * @param {string} str string to be coverted to a slug
- */
-export const slug = (str: string) => {
-  str = String(str).toString();
-  str = str.replace(/^\s+|\s+$/g, ''); // trim
-  str = str.toLowerCase();
+// =============================================================================
+// Slug
+// =============================================================================
 
-  // remove accents, swap ñ for n, etc
-  const swaps: any = {
+/**
+ * Converts a string to a URL-friendly slug.
+ * Normalises accented and Unicode characters to their ASCII equivalents,
+ * then replaces any remaining non-alphanumeric characters with hyphens.
+ *
+ * Non-string values are coerced via `String()`.
+ *
+ * @param str - String to slugify.
+ */
+export const slug = (str: string): string => {
+  let s = String(str).trim().toLowerCase();
+
+  // Normalise Unicode / accented characters to ASCII equivalents.
+  // Note: characters that appear in single-char entries (e.g. ö→o, ü→u)
+  // are intentionally omitted from multi-char entries (oe, ue) to avoid
+  // ambiguous double-mapping.
+  const swaps: Record<string, string[]> = {
     '0': ['°', '₀', '۰', '０'],
     '1': ['¹', '₁', '۱', '１'],
     '2': ['²', '₂', '۲', '２'],
@@ -381,7 +431,7 @@ export const slug = (str: string) => {
     kh: ['х', 'خ', 'ხ'],
     lj: ['љ'],
     nj: ['њ'],
-    oe: ['ö', 'œ', 'ؤ'],
+    oe: ['œ', 'ؤ'], // ö removed — already mapped to 'o' above
     oi: ['ऑ'],
     oii: ['ऒ'],
     ps: ['ψ'],
@@ -391,7 +441,7 @@ export const slug = (str: string) => {
     sx: ['ŝ'],
     th: ['þ', 'ϑ', 'ث', 'ذ', 'ظ'],
     ts: ['ц', 'ც', 'წ'],
-    ue: ['ü'],
+    ue: [], // ü removed — already mapped to 'u' above
     uu: ['ऊ'],
     ya: ['я'],
     yu: ['ю'],
@@ -627,16 +677,16 @@ export const slug = (str: string) => {
     Zh: ['Ж'],
   };
 
-  Object.keys(swaps).forEach((swap: string) => {
-    swaps[swap].forEach((s: string) => {
-      str = str.replace(new RegExp(s, 'g'), swap);
+  Object.keys(swaps).forEach((swap) => {
+    swaps[swap].forEach((ch) => {
+      s = s.replace(new RegExp(ch, 'g'), swap);
     });
   });
 
-  return str
-    .replace(/[^a-zA-Z0-9]/g, '-') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-') // collapse dashes
-    .replace(/^-+/, '') // trim - from start of text
-    .replace(/-+$/, ''); // trim - from end of text
+  return s
+    .replace(/[^a-zA-Z0-9]/g, '-') // replace non-alphanumeric with hyphen
+    .replace(/\s+/g, '-') // collapse whitespace
+    .replace(/-+/g, '-') // collapse consecutive hyphens
+    .replace(/^-+/, '') // trim leading hyphens
+    .replace(/-+$/, ''); // trim trailing hyphens
 };

@@ -1,97 +1,129 @@
-class MeasureTool {
-  private hrstart: any = 0;
-  private hrcheckpoint: any = 0;
-  private checkoints: any[] = [];
+// ./src/measureTool.ts
 
-  constructor() {
-    this.hrstart = 0;
-    this.hrcheckpoint = 0;
-    this.checkoints = [];
+import { CheckpointResult, MeasureExecTimeResult, StopResult } from './interfaces';
+
+/**
+ * Returns current time in milliseconds with sub-millisecond precision.
+ * Uses `performance.now()` (available in Node.js 16+ and all modern browsers).
+ */
+const now = (): number => performance.now();
+
+/**
+ * Defers a callback to the next event loop tick.
+ * Uses `setImmediate` in Node.js, `setTimeout` in browsers.
+ */
+const defer = (fn: () => void): void => {
+  if (typeof setImmediate === 'function') {
+    setImmediate(fn);
+  } else {
+    setTimeout(fn, 0);
   }
+};
 
-  calcDuration(hrcp: any[]) {
-    return Math.round(hrcp[0] * 1000 + hrcp[1] / 1000000);
+class MeasureTool {
+  private startTime: number = 0;
+  private checkpointTime: number = 0;
+  private checkpoints: CheckpointResult[] = [];
+
+  private calcDuration(startMs: number, endMs: number): number {
+    return Math.round(endMs - startMs);
   }
 
   /**
-   * Measure execution time of a function fn
-   * @param {string} name Name of function that has been called, used for loggin purposes
-   * @param fn
-   * @returns
+   * Measure the total execution time of an async (or sync) function.
+   * Calls `start()` internally — do not call it separately.
+   *
+   * @param name - Label for this measurement.
+   * @param fn   - Function to measure.
+   * @returns Stop result merged with the function's return value.
    */
-  async measureExecTime(name: string, fn: any) {
+  async measureExecTime<T>(name: string, fn: () => T | Promise<T>): Promise<MeasureExecTimeResult<T>> {
     this.start();
-
     const result = await fn();
-
     const measure = this.stop(name);
-
     return { ...measure, result };
   }
 
   /**
-   * Check the thread blocking time and calls a function
-   * @param {{ name: string, durationMs: number }} fn Function that get called after measuring is done
+   * Measures event-loop blocking time by comparing timestamps before and
+   * after the next event loop tick.
+   *
+   * Uses `setImmediate` in Node.js, `setTimeout` in browsers.
+   *
+   * @param name - Optional label for this measurement.
+   * @param fn   - Callback invoked with `{ name, durationMs }`.
    */
-  threadBlockTime(name?: string, fn?: any) {
-    const hrstart = process.hrtime();
+  threadBlockTime(name?: string, fn?: (result: { name: string | undefined; durationMs: number }) => void): void {
+    const start = now();
 
-    setImmediate(() => {
-      const hrcp = process.hrtime(hrstart);
-
+    defer(() => {
+      const durationMs = this.calcDuration(start, now());
       if (typeof fn === 'function') {
-        fn({ name, durationMs: this.calcDuration(hrcp) });
+        fn({ name, durationMs });
       }
     });
   }
 
   /**
-   * Start a serie of measurements with checkpoints
-   * @returns {object} Object of type { hrtime }
+   * Start a measurement session. Resets all checkpoints.
+   * Must be called before `addCheckpoint` or `stop`.
+   *
+   * @returns The timestamp (ms) captured at start.
    */
-  start() {
-    this.hrstart = process.hrtime();
-    this.hrcheckpoint = process.hrtime();
-    this.checkoints.length = 0;
+  start(): { timestamp: number } {
+    this.startTime = now();
+    this.checkpointTime = now();
+    this.checkpoints = [];
 
-    return { hrtime: this.hrstart };
+    return { timestamp: this.startTime };
   }
 
   /**
-   * Add a checkpoint in between operations to measure duration of time since last checkpoint
-   * @param {string} name Name of the checkpoint
-   * @returns {object}
+   * Record a checkpoint measuring time elapsed since the previous checkpoint
+   * (or since `start()` for the first checkpoint).
+   *
+   * @param name - Optional label for this checkpoint.
+   * @returns Checkpoint result with `name`, `durationMs`, and `timestamp`.
    */
-  addCheckpoint(name?: string) {
-    const hrcp = process.hrtime(this.hrcheckpoint);
-    this.hrcheckpoint = process.hrtime();
+  addCheckpoint(name?: string): CheckpointResult {
+    const t = now();
+    const duration = this.calcDuration(this.checkpointTime, t);
+    this.checkpointTime = t;
 
-    const msg = { name, durationMs: this.calcDuration(hrcp) };
+    const entry: CheckpointResult = {
+      name,
+      durationMs: duration,
+      timestamp: t,
+    };
 
-    this.checkoints.push(msg);
-
-    return { hrtime: this.hrcheckpoint, ...msg };
+    this.checkpoints.push(entry);
+    return entry;
   }
 
   /**
-   * Stop a serie of measurements and return a final duration in msec along with name of the step
-   * @param {string} name Name of last checkpoint
-   * @returns {object}
+   * Stop the measurement session and return total duration since `start()`.
+   * The stop result is NOT added to the checkpoints list.
+   *
+   * @param name - Optional label for the final measurement.
+   * @returns Stop result with `name`, `durationMs`, and `timestamp`.
    */
-  stop(name?: string) {
-    const hrcp = process.hrtime(this.hrstart);
+  stop(name?: string): StopResult {
+    const t = now();
 
-    const msg = { name, durationMs: this.calcDuration(hrcp) };
-
-    return { hrtime: process.hrtime(), ...msg };
+    return {
+      name,
+      durationMs: this.calcDuration(this.startTime, t),
+      timestamp: t,
+    };
   }
 
   /**
-   * Return a list of checkpoints
-   * @returns {object[]}
+   * Return all checkpoints recorded since the last `start()` call.
+   *
+   * @returns Array of checkpoint results in insertion order.
    */
-  getCheckpoints() {
-    return this.checkoints;
+  getCheckpoints(): CheckpointResult[] {
+    return this.checkpoints;
   }
 }
 

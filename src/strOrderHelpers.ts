@@ -1,111 +1,149 @@
+// ./src/strOrderHelpers.ts
+
+export interface StrOrderHelpersOptions {
+  /** Starting counter value in the given base. Defaults to `'0'`. */
+  start?: string;
+  /** Step size used by `increase()` and `decrease()`. Defaults to `'1'`. */
+  step?: string;
+  /** Numeric base for parsing and formatting values. Defaults to `36`. */
+  base?: number;
+}
+
 class StrOrderHelpers {
-  private start = '';
-  private step = '0';
-  private orderNo = '';
-  private base = 36; // English alphabet + 10 digits
+  private start: string;
+  private step: string;
+  private orderNo: string;
+  private base: number;
 
   /**
-   * OrderHerlpers constructor
-   * @param opt Object with initial params: start, step and value base (default 36)
+   * @param opt - Initial options: `start`, `step`, and `base` (default 36).
    */
-  constructor(opt: any) {
+  constructor(opt?: StrOrderHelpersOptions) {
     this.start = opt?.start ?? '0';
     this.step = opt?.step ?? '1';
-    this.base = isNaN(opt?.base) || opt?.base == null ? 36 : Number(opt.base);
-
+    this.base = opt?.base == null || isNaN(Number(opt.base)) ? 36 : Number(opt.base);
     this.orderNo = this.start;
   }
 
+  // ---------------------------------------------------------------------------
+  // Counter API
+  // ---------------------------------------------------------------------------
+
   /**
-   * Returns current counter value
-   * @returns string
+   * Returns the current counter value.
    */
-  current() {
+  current(): string {
     return this.orderNo;
   }
 
   /**
-   * Resets counter to the start value
+   * Resets the counter to the start value.
    */
-  reset() {
+  reset(): void {
     this.orderNo = this.start;
   }
 
   /**
-   * Adds a value to the counter and returns next counter value
-   * @param {string} value to add to the current counter
-   * @returns {string} New counter increased by value
+   * Adds `value` to the counter and returns the new counter value.
+   *
+   * @param value - Value to add (in the current base).
    */
-  addValue(value: string) {
+  addValue(value: string): string {
     this.orderNo = this.add(this.orderNo, value);
     return this.orderNo;
   }
 
   /**
-   * Substracts a value to the counter and returns next counter value
-   * @param {string} value to substract to the current counter
-   * @returns {string} New counter decreased by value
+   * Subtracts `value` from the counter and returns the new counter value.
+   *
+   * @param value - Value to subtract (in the current base).
    */
-  substractValue(value: string) {
-    this.orderNo = this.substract(this.orderNo, value);
+  subtractValue(value: string): string {
+    this.orderNo = this.subtract(this.orderNo, value);
     return this.orderNo;
   }
 
   /**
-   * Increases counter value by step and return new value
-   * @returns {string} A string value increased by step
+   * @deprecated Renamed to `subtractValue`. Will be removed in a future major version.
    */
-  increase() {
+  substractValue(value: string): string {
+    return this.subtractValue(value);
+  }
+
+  /**
+   * Increases the counter by `step` and returns the new value.
+   */
+  increase(): string {
     return this.addValue(this.step);
   }
 
   /**
-   * Decreases counter value by step and return new value
-   * @returns {string} A string value decreased by step
+   * Decreases the counter by `step` and returns the new value.
    */
-  decrease() {
-    return this.substractValue(this.step);
+  decrease(): string {
+    return this.subtractValue(this.step);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Arithmetic helpers
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Adds `valueB` to `valueA` and returns the result in the current base.
+   * Returns `'0'` if either value is not a valid number in the current base.
+   *
+   * @param valueA - Augend (in the current base).
+   * @param valueB - Addend (in the current base).
+   */
+  add(valueA: string, valueB: string): string {
+    const a = parseInt(valueA, this.base);
+    const b = parseInt(valueB, this.base);
+    if (isNaN(a) || isNaN(b)) return '0';
+    return (a + b).toString(this.base);
   }
 
   /**
-   * Adds valueB to the valueA and returns result
-   * @param {string} valueA
-   * @param {string} valueB
-   * @returns
+   * Subtracts `valueB` from `valueA` and returns the result in the current base.
+   * Returns `'0'` if either value is not a valid number in the current base.
+   *
+   * @param valueA - Minuend (in the current base).
+   * @param valueB - Subtrahend (in the current base).
    */
-  add(valueA: string, valueB: string) {
-    return (parseInt(valueA, this.base) + parseInt(valueB, this.base)).toString(this.base);
+  subtract(valueA: string, valueB: string): string {
+    const a = parseInt(valueA, this.base);
+    const b = parseInt(valueB, this.base);
+    if (isNaN(a) || isNaN(b)) return '0';
+    return (a - b).toString(this.base);
   }
 
   /**
-   * Substracts valueB from the valueA and returns result
-   * @param {string} valueA
-   * @param {string} valueB
-   * @returns {string}
+   * @deprecated Renamed to `subtract`. Will be removed in a future major version.
    */
-  substract(valueA: string, valueB: string) {
-    return (parseInt(valueA, this.base) - parseInt(valueB, this.base)).toString(this.base);
+  substract(valueA: string, valueB: string): string {
+    return this.subtract(valueA, valueB);
   }
 
   /**
-   * Finds values in the middle between valueA and valueB. If nothing found returns null value
-   * @param {string} valueA
-   * @param {string} valueB
-   * @returns {string} A value between valueA and valueB or null
+   * Finds the value halfway between `valueA` and `valueB`.
+   * Returns `null` if no distinct midpoint exists (i.e. the two values are
+   * adjacent or equal).
+   *
+   * @param valueA - First boundary value (in the current base).
+   * @param valueB - Second boundary value (in the current base).
    */
-  valueBetween(valueA: string, valueB: string) {
-    let minValue = valueA;
-    let maxValue = valueB;
+  valueBetween(valueA: string, valueB: string): string | null {
+    const a = parseInt(valueA, this.base);
+    const b = parseInt(valueB, this.base);
 
-    if (minValue > maxValue) {
-      minValue = valueB;
-      maxValue = valueA;
-    }
+    if (isNaN(a) || isNaN(b)) return null;
 
-    const diff = ((parseInt(maxValue, this.base) - parseInt(minValue, this.base)) / 2).toString(this.base);
-    const newValue = this.add(minValue, diff);
+    const minValue = Math.min(a, b);
+    const maxValue = Math.max(a, b);
 
-    return newValue != minValue ? newValue : null;
+    const mid = minValue + Math.floor((maxValue - minValue) / 2);
+    const midStr = mid.toString(this.base);
+
+    return mid !== minValue ? midStr : null;
   }
 }
 

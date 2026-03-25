@@ -13,31 +13,31 @@ export default [
     // Config for jest.config.ts and other config files
     files: ['*.config.ts'],
     plugins: {
-      '@typescript-eslint': typescript
+      '@typescript-eslint': typescript,
     },
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     rules: {
-      'no-undef': 'off'
-    }
+      'no-undef': 'off',
+    },
   },
   {
     // Config for test files
     files: ['**/*.test.ts', '**/*.spec.ts'],
     plugins: {
       '@typescript-eslint': typescript,
-      'jest': jest
+      jest: jest,
     },
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module'
+        sourceType: 'module',
       },
       globals: {
         // Add Jest globals
@@ -49,14 +49,14 @@ export default [
         beforeAll: 'readonly',
         beforeEach: 'readonly',
         afterAll: 'readonly',
-        afterEach: 'readonly'
-      }
+        afterEach: 'readonly',
+      },
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      'no-undef': 'off'  // Turn off no-undef for test files
-    }
+      'no-undef': 'off', // Turn off no-undef for test files
+    },
   },
   {
     files: ['src/**/*.ts'],
@@ -68,10 +68,8 @@ export default [
       // '.prettierrc.js',
       // '.babelrc.js',
       // '.stylelintrc.js',
-      
       // // webpack configs
       // 'webpack.*.config.js',
-      
       // // directories
       // 'public/**/*',
       // 'static/**/*',
@@ -83,15 +81,15 @@ export default [
     ],
     plugins: {
       '@typescript-eslint': typescript,
-      'prettier': prettier,
-      'jest': jest
+      prettier: prettier,
+      jest: jest,
     },
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './tsconfig.json'
+        project: './tsconfig.json',
       },
       globals: {
         console: 'readonly',
@@ -101,8 +99,11 @@ export default [
         __filename: 'readonly',
         module: 'readonly',
         require: 'readonly',
-        URLSearchParams: 'readonly'
-      }
+        URLSearchParams: 'readonly',
+        performance: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+      },
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
@@ -117,7 +118,7 @@ export default [
       '@typescript-eslint/ban-ts-comment': 'off',
       'no-unused-disable': 'off',
       // Turn off warning about directives
-      'eslint-comments/no-unused-enable': 'off'
-    }
-  }
+      'eslint-comments/no-unused-enable': 'off',
+    },
+  },
 ];
