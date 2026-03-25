@@ -29,11 +29,13 @@
   "author": "Sergey Demidenko",
   "license": "ISC",
   "dependencies": {
+    "check-types": "^11.2.3",
     "dayjs": "^1.11.20",
     "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/check-types": "^11.2.2",
     "@types/jest": "^29.5.14",
     "@types/lodash": "^4.17.24",
     "@types/node": "^25.5.0",

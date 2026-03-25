@@ -1,5 +1,6 @@
 // ./src/logger.ts
 
+import check from 'check-types';
 import { LoggerInterface, LoggerLevels } from './interfaces';
 
 type LogFn = (...args: any[]) => void;
@@ -18,6 +19,15 @@ const LEVELS_TO_VALUES: Record<string, number> = {
   [LoggerLevels.WARNING]: LEVELS_VALUES.WARNING,
   [LoggerLevels.LOG]: LEVELS_VALUES.LOG,
   [LoggerLevels.DEBUG]: LEVELS_VALUES.DEBUG,
+};
+
+/**
+ * Duck-type check for a Logger-compatible object.
+ * Avoids instanceof which breaks across package versions or
+ * module boundaries when Logger comes from an external library.
+ */
+export const isLogger = (value: any): boolean => {
+  return value !== null && value !== undefined && check.function(value.log) && check.function(value.error);
 };
 
 export class Logger {
